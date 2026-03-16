@@ -37,7 +37,7 @@ export default async function AboutPage() {
               <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-4">Disciplines</h2>
               <ul className="space-y-1">
                 {settings.stack.map((item) => (
-                  <li key={item} className="text-sm">{item}</li>
+                  <li key={item} className="text-sm"><span className="text-xs">✦ </span>{item}</li>
                 ))}
               </ul>
             </section>
@@ -69,7 +69,7 @@ export default async function AboutPage() {
                       rel="noopener noreferrer"
                       className="text-sm hover:opacity-50 transition-opacity"
                     >
-                      {link.platform} ↗
+                      {link.platform} ➺
                     </a>
                   </li>
                 ))}
