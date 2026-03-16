@@ -36,7 +36,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           href="/"
           className="inline-block text-xs text-[var(--fg-muted)] hover:text-[var(--fg)] transition-colors mt-10 mb-8"
         >
-          ← Work
+          <span className="text-xl">⬶ </span>Work
         </Link>
 
         {/* Title block */}
@@ -51,7 +51,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             ))}
           </div>
           {project.description && (
-            <p className="mt-5 text-sm leading-relaxed text-[var(--fg-muted)] max-w-prose">
+            <p className="mt-5 text-sm leading-relaxed text-[var(--fg-muted)] max-w-prose font-[family-name:var(--font-moonlight)]">
               {project.description}
             </p>
           )}

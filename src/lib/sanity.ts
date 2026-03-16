@@ -202,6 +202,17 @@ export const siteSettingsQuery = `
     aboutText,
     aboutLinks,
     extendedAbout,
+    "aboutImage": aboutImage {
+      alt,
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
     stack,
     email,
     social,
@@ -314,6 +325,17 @@ export interface SiteSettings {
   aboutText?: string
   aboutLinks?: AboutLink[]
   extendedAbout?: unknown[]
+  aboutImage?: {
+    alt?: string
+    asset: {
+      _id: string
+      url: string
+      metadata?: {
+        dimensions?: { width: number; height: number }
+        lqip?: string
+      }
+    }
+  }
   stack?: string[]
   email?: string
   social?: SocialLink[]

@@ -1,6 +1,7 @@
 import Header from '@/components/Header'
 import { PortableText } from '@portabletext/react'
 import { getSiteSettings } from '@/lib/sanity'
+import Image from 'next/image'
 
 export const revalidate = 60
 
@@ -16,6 +17,21 @@ export default async function AboutPage() {
       <Header />
       <main className="pt-16 max-w-2xl mx-auto px-6 pb-24">
         <div className="mt-16 space-y-12">
+
+          {/* About Image */}
+          {settings?.aboutImage && (
+            <section>
+              <Image
+                src={settings.aboutImage.asset.url}
+                alt={settings.aboutImage.alt || 'About'}
+                width={settings.aboutImage.asset.metadata?.dimensions?.width || 800}
+                height={settings.aboutImage.asset.metadata?.dimensions?.height || 600}
+                placeholder={settings.aboutImage.asset.metadata?.lqip ? 'blur' : 'empty'}
+                blurDataURL={settings.aboutImage.asset.metadata?.lqip}
+                className="w-full object-cover"
+              />
+            </section>
+          )}
 
           {/* Bio */}
           <section>
@@ -37,7 +53,7 @@ export default async function AboutPage() {
               <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-4">Disciplines</h2>
               <ul className="space-y-1">
                 {settings.stack.map((item) => (
-                  <li key={item} className="text-sm"><span className="text-xs">✦ </span>{item}</li>
+                  <li key={item} className="text-sm"><span className="text-lg">⟣ </span>{item}</li>
                 ))}
               </ul>
             </section>

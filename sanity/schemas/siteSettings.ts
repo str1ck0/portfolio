@@ -77,6 +77,13 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'aboutImage',
+      title: 'About Image',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Photo of you, shown at the top of the about page',
+    }),
+    defineField({
       name: 'extendedAbout',
       title: 'Extended About',
       type: 'array',
