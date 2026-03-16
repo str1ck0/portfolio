@@ -22,13 +22,6 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'featured',
-      title: 'Featured',
-      type: 'boolean',
-      description: 'Show in main gallery on homepage',
-      initialValue: false,
-    }),
-    defineField({
       name: 'order',
       title: 'Display Order',
       type: 'number',
@@ -80,6 +73,27 @@ export default defineType({
               title: 'Caption',
               type: 'string',
             },
+            {
+              name: 'showOnGallery',
+              title: 'Show on Homepage Gallery',
+              type: 'boolean',
+              description: 'Include this specific image in the homepage gallery',
+              initialValue: false,
+            },
+            {
+              name: 'gridSpan',
+              title: 'Grid Span',
+              type: 'number',
+              description: 'How many columns this image spans (1, 2, or 3). Default is 1.',
+              options: {
+                list: [
+                  { title: 'Normal (1 column)', value: 1 },
+                  { title: 'Wide (2 columns)', value: 2 },
+                  { title: 'Full width (3 columns)', value: 3 },
+                ],
+              },
+              initialValue: 1,
+            },
           ],
         },
       ],
@@ -116,14 +130,10 @@ export default defineType({
   preview: {
     select: {
       title: 'title',
-      featured: 'featured',
       media: 'images.0',
     },
-    prepare({ title, featured, media }) {
-      return {
-        title: featured ? `★ ${title}` : title,
-        media,
-      }
+    prepare({ title, media }) {
+      return { title, media }
     },
   },
   orderings: [

@@ -21,13 +21,14 @@ const builder = client ? imageUrlBuilder(client) : null
 
 export function urlFor(source: SanityImageSource) {
   if (!builder) {
-    // Return a placeholder image URL builder that returns empty strings
-    return {
-      width: () => ({ quality: () => ({ url: () => '' }) }),
-      height: () => ({ quality: () => ({ url: () => '' }) }),
-      quality: () => ({ url: () => '' }),
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const dummyBuilder: any = {
+      width: () => dummyBuilder,
+      height: () => dummyBuilder,
+      quality: () => dummyBuilder,
       url: () => '',
     }
+    return dummyBuilder
   }
   return builder.image(source)
 }
@@ -36,20 +37,16 @@ export function urlFor(source: SanityImageSource) {
 // GROQ Queries
 // ============================================
 
-// Get all featured projects for the gallery
-export const featuredProjectsQuery = `
-  *[_type == "project" && featured == true] | order(order asc) {
-    _id,
-    title,
-    slug,
-    description,
-    tags,
-    technologies,
-    year,
-    "images": images[] {
+// Get all images marked showOnGallery, flat list with project context
+export const galleryImagesQuery = `
+  *[_type == "project" && count(images[showOnGallery == true]) > 0] | order(order asc) {
+    "projectTitle": title,
+    "projectSlug": slug.current,
+    "images": images[showOnGallery == true] {
       _key,
       alt,
       caption,
+      gridSpan,
       asset-> {
         _id,
         url,
@@ -58,8 +55,7 @@ export const featuredProjectsQuery = `
           lqip
         }
       }
-    },
-    links
+    }
   }
 `
 
@@ -79,6 +75,7 @@ export const allProjectsQuery = `
       _key,
       alt,
       caption,
+      gridSpan,
       asset-> {
         _id,
         url,
@@ -107,6 +104,7 @@ export const projectsByTagQuery = `
       _key,
       alt,
       caption,
+      gridSpan,
       asset-> {
         _id,
         url,
@@ -135,6 +133,7 @@ export const projectBySlugQuery = `
       _key,
       alt,
       caption,
+      gridSpan,
       asset-> {
         _id,
         url,
@@ -214,9 +213,9 @@ export const siteSettingsQuery = `
 // Fetcher Functions
 // ============================================
 
-export async function getFeaturedProjects(): Promise<Project[]> {
+export async function getGalleryImages(): Promise<GalleryProject[]> {
   if (!client) return []
-  return client.fetch(featuredProjectsQuery)
+  return client.fetch(galleryImagesQuery)
 }
 
 export async function getAllProjects(): Promise<Project[]> {
@@ -259,7 +258,7 @@ export interface Project {
   slug: { current: string }
   featured?: boolean
   description?: string
-  fullDescription?: any[]
+  fullDescription?: unknown[]
   tags?: string[]
   technologies?: string[]
   year?: number
@@ -267,10 +266,17 @@ export interface Project {
   links?: { title: string; url: string }[]
 }
 
+export interface GalleryProject {
+  projectTitle: string
+  projectSlug: string
+  images: ProjectImage[]
+}
+
 export interface ProjectImage {
   _key: string
   alt?: string
   caption?: string
+  gridSpan?: number
   asset: {
     _id: string
     url: string
@@ -287,7 +293,7 @@ export interface BlogPost {
   slug: { current: string }
   publishedAt: string
   excerpt?: string
-  body?: any[]
+  body?: unknown[]
   tags?: string[]
   featuredImage?: {
     alt?: string
@@ -307,7 +313,7 @@ export interface SiteSettings {
   name: string
   aboutText?: string
   aboutLinks?: AboutLink[]
-  extendedAbout?: any[]
+  extendedAbout?: unknown[]
   stack?: string[]
   email?: string
   social?: SocialLink[]

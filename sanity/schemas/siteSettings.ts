@@ -85,13 +85,10 @@ export default defineType({
     }),
     defineField({
       name: 'stack',
-      title: 'Tech Stack / Tools',
+      title: 'Disciplines',
       type: 'array',
       of: [{ type: 'string' }],
-      options: {
-        layout: 'tags',
-      },
-      description: 'Technologies and tools you work with',
+      description: 'Drag to reorder. e.g. Creative Direction, Software Engineering, Writing',
     }),
     defineField({
       name: 'email',
@@ -108,20 +105,9 @@ export default defineType({
           fields: [
             {
               name: 'platform',
-              title: 'Platform',
+              title: 'Display Name',
               type: 'string',
-              options: {
-                list: [
-                  { title: 'GitHub', value: 'github' },
-                  { title: 'LinkedIn', value: 'linkedin' },
-                  { title: 'Twitter/X', value: 'twitter' },
-                  { title: 'Instagram', value: 'instagram' },
-                  { title: 'Dribbble', value: 'dribbble' },
-                  { title: 'Behance', value: 'behance' },
-                  { title: 'CodePen', value: 'codepen' },
-                  { title: 'Other', value: 'other' },
-                ],
-              },
+              description: 'e.g. Instagram, Studio Pilz, GitHub',
             },
             {
               name: 'url',

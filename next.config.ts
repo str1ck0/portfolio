@@ -24,10 +24,7 @@ const nextConfig: NextConfig = {
   },
   // Performance budgets
   experimental: {
-    // Optimize large pages
     largePageDataBytes: 128 * 100000,
-    // Optimize memory usage
-    optimizePackageImports: ['lucide-react'],
   },
   // Ignore build errors (as per your existing config)
   eslint: {
