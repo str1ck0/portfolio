@@ -13,8 +13,8 @@ function YinYang({ inverted }: { inverted: boolean }) {
     <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="50" fill={bg} />
       <path d="M50,0 A50,50,0,0,1,50,100 A25,25,0,0,1,50,50 A25,25,0,0,0,50,0" fill={fg} />
-      <circle cx="50" cy="25" r="12" fill={bg} />
-      <circle cx="50" cy="75" r="12" fill={fg} />
+      <circle cx="50" cy="25" r="8" fill={fg} />
+      <circle cx="50" cy="75" r="8" fill={bg} />
       <circle cx="50" cy="50" r="49" fill="none" stroke={fg} strokeWidth="2" />
     </svg>
   )
