@@ -99,6 +99,15 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'video',
+      title: 'Demo Video',
+      type: 'file',
+      options: {
+        accept: 'video/mp4,video/webm',
+      },
+      description: 'Short demo clip (MP4 recommended)',
+    }),
+    defineField({
       name: 'technologies',
       title: 'Technologies',
       type: 'array',
