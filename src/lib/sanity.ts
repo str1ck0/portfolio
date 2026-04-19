@@ -39,9 +39,10 @@ export function urlFor(source: SanityImageSource) {
 
 // Get all images marked showOnGallery, flat list with project context
 export const galleryImagesQuery = `
-  *[_type == "project" && count(images[showOnGallery == true]) > 0] | order(order asc) {
+  *[_type == "project" && (count(images[showOnGallery == true]) > 0 || defined(video))] | order(order asc) {
     "projectTitle": title,
     "projectSlug": slug.current,
+    "video": video.asset->url,
     "images": images[showOnGallery == true] {
       _key,
       alt,
@@ -71,6 +72,7 @@ export const allProjectsQuery = `
     tags,
     technologies,
     year,
+    "video": video.asset->url,
     "images": images[] {
       _key,
       alt,
@@ -100,6 +102,7 @@ export const projectsByTagQuery = `
     tags,
     technologies,
     year,
+    "video": video.asset->url,
     "images": images[] {
       _key,
       alt,
@@ -129,6 +132,7 @@ export const projectBySlugQuery = `
     tags,
     technologies,
     year,
+    "video": video.asset->url,
     "images": images[] {
       _key,
       alt,
@@ -236,7 +240,7 @@ export async function getAllProjects(): Promise<Project[]> {
 
 export async function getProjectsByTag(tag: string): Promise<Project[]> {
   if (!client) return []
-  return client.fetch(projectsByTagQuery, { tag })
+  return client.fetch(projectsByTagQuery, { tag } as Record<string, string>)
 }
 
 export async function getProjectBySlug(slug: string): Promise<Project | null> {
@@ -273,6 +277,7 @@ export interface Project {
   tags?: string[]
   technologies?: string[]
   year?: number
+  video?: string
   images?: ProjectImage[]
   links?: { title: string; url: string }[]
 }
@@ -280,6 +285,7 @@ export interface Project {
 export interface GalleryProject {
   projectTitle: string
   projectSlug: string
+  video?: string
   images: ProjectImage[]
 }
 

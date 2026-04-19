@@ -63,7 +63,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                   href={link.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-xs border-b border-[var(--fg)] pb-px hover:opacity-50 transition-opacity"
+                  className="text-xs no-underline hover:opacity-50 transition-opacity"
                 >
                   {link.title} ↗
                 </a>
@@ -71,6 +71,20 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             </div>
           )}
         </div>
+
+        {/* Video */}
+        {project.video && (
+          <div className="mb-3">
+            <video
+              src={project.video}
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full h-auto"
+            />
+          </div>
+        )}
 
         {/* Images */}
         <div className="flex flex-col gap-3">
