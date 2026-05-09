@@ -118,7 +118,7 @@ function GalleryCard({ item, priority }: { item: GalleryItem; priority?: boolean
           />
         ) : image ? (
           <Image
-            src={urlFor(image.asset).width(900).quality(80).auto('format').url()}
+            src={urlFor(image.asset).width(1400).quality(92).auto('format').url()}
             alt={image.alt || projectTitle}
             width={image.asset.metadata?.dimensions?.width || 800}
             height={image.asset.metadata?.dimensions?.height || 600}

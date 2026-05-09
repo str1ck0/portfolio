@@ -91,7 +91,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           {project.images?.map((image, i) => {
             const w = image.asset.metadata?.dimensions?.width || 1200
             const h = image.asset.metadata?.dimensions?.height || 800
-            const src = urlFor(image.asset).width(1200).quality(82).auto('format').url()
+            const src = urlFor(image.asset).width(2400).quality(95).auto('format').url()
             return (
               <div key={image._key}>
                 <Image
