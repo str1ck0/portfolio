@@ -1,0 +1,20 @@
+{
+  "version": 3,
+  "createdAt": "2026-04-19T14:45:27.185Z",
+  "workspaces": [
+    {
+      "name": "portfolio",
+      "title": "Portfolio CMS",
+      "basePath": "/studio",
+      "projectId": "ucqrzxxd",
+      "dataset": "production",
+      "icon": null,
+      "mediaLibrary": {
+        "enabled": false
+      },
+      "schema": "e1f84468.create-schema.json",
+      "tools": "4277de03.create-tools.json"
+    }
+  ],
+  "studioVersion": "4.22.0"
+}

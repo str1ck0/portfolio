@@ -77,6 +77,13 @@ export default defineType({
       ],
     }),
     defineField({
+      name: 'aboutImage',
+      title: 'About Image (legacy)',
+      type: 'image',
+      options: { hotspot: true },
+      hidden: true,
+    }),
+    defineField({
       name: 'aboutImagesTop',
       title: 'About Images — Top Strip',
       type: 'array',
