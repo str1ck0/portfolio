@@ -77,11 +77,30 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'aboutImage',
-      title: 'About Image',
-      type: 'image',
-      options: { hotspot: true },
-      description: 'Photo of you, shown at the top of the about page',
+      name: 'aboutImagesTop',
+      title: 'About Images — Top Strip',
+      type: 'array',
+      description: 'A few photos shown above your bio text (horizontal strip)',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+        },
+      ],
+    }),
+    defineField({
+      name: 'aboutImagesBottom',
+      title: 'About Images — Bottom Grid',
+      type: 'array',
+      description: 'More photos shown below your bio text (grid)',
+      of: [
+        {
+          type: 'image',
+          options: { hotspot: true },
+          fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+        },
+      ],
     }),
     defineField({
       name: 'extendedAbout',

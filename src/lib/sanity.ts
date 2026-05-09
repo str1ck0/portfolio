@@ -182,8 +182,18 @@ export const blogPostBySlugQuery = `
     slug,
     publishedAt,
     excerpt,
-    body,
     tags,
+    "body": body[] {
+      ...,
+      _type == "image" => {
+        ...,
+        "asset": asset-> {
+          _id,
+          url,
+          metadata { dimensions, lqip }
+        }
+      }
+    },
     "featuredImage": featuredImage {
       alt,
       asset-> {
@@ -206,7 +216,18 @@ export const siteSettingsQuery = `
     aboutText,
     aboutLinks,
     extendedAbout,
-    "aboutImage": aboutImage {
+    "aboutImagesTop": aboutImagesTop[] {
+      alt,
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    },
+    "aboutImagesBottom": aboutImagesBottom[] {
       alt,
       asset-> {
         _id,
@@ -221,6 +242,24 @@ export const siteSettingsQuery = `
     email,
     social,
     galleryInterval
+  }
+`
+
+// Get approved graffiti tags
+export const graffitiQuery = `
+  *[_type == "graffiti" && approved == true] | order(submittedAt desc) {
+    _id,
+    submittedAt,
+    "image": image {
+      asset-> {
+        _id,
+        url,
+        metadata {
+          dimensions,
+          lqip
+        }
+      }
+    }
   }
 `
 
@@ -261,6 +300,11 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
 export async function getSiteSettings(): Promise<SiteSettings | null> {
   if (!client) return null
   return client.fetch(siteSettingsQuery)
+}
+
+export async function getGraffiti(): Promise<GraffitiTag[]> {
+  if (!client) return []
+  return client.fetch(graffitiQuery)
 }
 
 // ============================================
@@ -325,14 +369,36 @@ export interface BlogPost {
   }
 }
 
+export interface AboutImage {
+  alt?: string
+  asset: {
+    _id: string
+    url: string
+    metadata?: {
+      dimensions?: { width: number; height: number }
+      lqip?: string
+    }
+  }
+}
+
 export interface SiteSettings {
   _id: string
   name: string
   aboutText?: string
   aboutLinks?: AboutLink[]
   extendedAbout?: unknown[]
-  aboutImage?: {
-    alt?: string
+  aboutImagesTop?: AboutImage[]
+  aboutImagesBottom?: AboutImage[]
+  stack?: string[]
+  email?: string
+  social?: SocialLink[]
+  galleryInterval?: number
+}
+
+export interface GraffitiTag {
+  _id: string
+  submittedAt: string
+  image?: {
     asset: {
       _id: string
       url: string
@@ -342,10 +408,6 @@ export interface SiteSettings {
       }
     }
   }
-  stack?: string[]
-  email?: string
-  social?: SocialLink[]
-  galleryInterval?: number
 }
 
 export interface AboutLink {

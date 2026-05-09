@@ -58,6 +58,14 @@ export default function Header() {
             Work
           </Link>
           <Link
+            href="/blog"
+            className={`text-sm transition-opacity ${
+              pathname.startsWith('/blog') ? 'opacity-100' : 'opacity-40 hover:opacity-100'
+            }`}
+          >
+            Blog
+          </Link>
+          <Link
             href="/about"
             className={`text-sm transition-opacity ${
               pathname === '/about' ? 'opacity-100' : 'opacity-40 hover:opacity-100'
@@ -106,6 +114,15 @@ export default function Header() {
             }`}
           >
             Work
+          </Link>
+          <Link
+            href="/blog"
+            onClick={() => setMenuOpen(false)}
+            className={`text-sm transition-opacity ${
+              pathname.startsWith('/blog') ? 'opacity-100' : 'opacity-40 hover:opacity-100'
+            }`}
+          >
+            Blog
           </Link>
           <Link
             href="/about"

@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from '@/components/ThemeProvider'
+import GraffitiCanvas from '@/components/GraffitiCanvas'
 import './globals.css'
 
 // Using Geist as default — swap out variable names once you've chosen your typefaces
@@ -34,7 +35,10 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${fontSans.variable} ${fontMoonlight.variable} ${fontMono.variable} font-sans`}>
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          {children}
+          <GraffitiCanvas />
+        </ThemeProvider>
       </body>
     </html>
   )
