@@ -38,3 +38,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# sanity build artifacts
+/.sanity
+/dist
+implementation_plan.md.resolved
