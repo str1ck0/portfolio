@@ -62,27 +62,30 @@ export default async function AboutPage() {
       <main className="pt-16 pb-24">
         <div className="mt-16 space-y-12">
 
-          {/* Top images — horizontal strip, full bleed */}
-          {settings?.aboutImagesTop && settings.aboutImagesTop.length > 0 ? (
+          {/* Top images — horizontal strip, full bleed (only when multiple images set) */}
+          {settings?.aboutImagesTop && settings.aboutImagesTop.length > 0 && (
             <section>
               <AboutImageStrip images={settings.aboutImagesTop} />
             </section>
-          ) : settings?.aboutImage?.asset?.url ? (
-            <section>
-              <Image
-                src={settings.aboutImage.asset.url}
-                alt={settings.aboutImage.alt || 'About'}
-                width={settings.aboutImage.asset.metadata?.dimensions?.width || 800}
-                height={settings.aboutImage.asset.metadata?.dimensions?.height || 600}
-                placeholder={settings.aboutImage.asset.metadata?.lqip ? 'blur' : 'empty'}
-                blurDataURL={settings.aboutImage.asset.metadata?.lqip}
-                className="w-full object-cover"
-              />
-            </section>
-          ) : null}
+          )}
 
           {/* Bio + rest in constrained width */}
           <div className="max-w-2xl mx-auto px-6 space-y-12">
+
+            {/* Legacy single about image — shown inside the constrained column */}
+            {(!settings?.aboutImagesTop || settings.aboutImagesTop.length === 0) && settings?.aboutImage?.asset?.url && (
+              <section>
+                <Image
+                  src={settings.aboutImage.asset.url}
+                  alt={settings.aboutImage.alt || 'About'}
+                  width={settings.aboutImage.asset.metadata?.dimensions?.width || 800}
+                  height={settings.aboutImage.asset.metadata?.dimensions?.height || 600}
+                  placeholder={settings.aboutImage.asset.metadata?.lqip ? 'blur' : 'empty'}
+                  blurDataURL={settings.aboutImage.asset.metadata?.lqip}
+                  className="w-full object-cover"
+                />
+              </section>
+            )}
 
             {/* Bio */}
             <section>
