@@ -1,8 +1,8 @@
-import Image from 'next/image'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import Header from '@/components/Header'
-import { getAllProjects, getProjectBySlug, urlFor } from '@/lib/sanity'
+import ProjectImages from '@/components/ProjectImages'
+import { getAllProjects, getProjectBySlug } from '@/lib/sanity'
 
 export const revalidate = 60
 
@@ -87,30 +87,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         )}
 
         {/* Images */}
-        <div className="flex flex-col gap-3">
-          {project.images?.map((image, i) => {
-            const w = image.asset.metadata?.dimensions?.width || 1200
-            const h = image.asset.metadata?.dimensions?.height || 800
-            const src = urlFor(image.asset).width(2400).quality(95).auto('format').url()
-            return (
-              <div key={image._key}>
-                <Image
-                  src={src}
-                  alt={image.alt || project.title}
-                  width={w}
-                  height={h}
-                  className="w-full h-auto"
-                  priority={i === 0}
-                  placeholder={image.asset.metadata?.lqip ? 'blur' : 'empty'}
-                  blurDataURL={image.asset.metadata?.lqip}
-                />
-                {image.caption && (
-                  <p className="text-xs text-[var(--fg-muted)] mt-2">{image.caption}</p>
-                )}
-              </div>
-            )
-          })}
-        </div>
+        {project.images && project.images.length > 0 && (
+          <ProjectImages images={project.images} projectTitle={project.title} />
+        )}
       </main>
     </>
   )
