@@ -9,47 +9,23 @@ export const metadata = {
   title: 'About — Liam Strickland',
 }
 
-function AboutImageStrip({ images }: { images: AboutImage[] }) {
+function AboutImages({ images }: { images: AboutImage[] }) {
   return (
-    <div className="flex gap-2 overflow-x-auto pb-1 -mx-6 px-6 snap-x snap-mandatory">
+    <>
       {images.map((img, i) => (
-        <div
-          key={img.asset._id}
-          className="flex-shrink-0 snap-start overflow-hidden"
-          style={{ height: 220, width: 'auto' }}
-        >
+        <section key={img.asset._id}>
           <Image
             src={img.asset.url}
             alt={img.alt || `Photo ${i + 1}`}
-            width={img.asset.metadata?.dimensions?.width || 400}
-            height={img.asset.metadata?.dimensions?.height || 300}
+            width={img.asset.metadata?.dimensions?.width || 800}
+            height={img.asset.metadata?.dimensions?.height || 600}
             placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
             blurDataURL={img.asset.metadata?.lqip}
-            className="h-full w-auto object-cover"
+            className="w-full h-auto block"
           />
-        </div>
+        </section>
       ))}
-    </div>
-  )
-}
-
-function AboutImageGrid({ images }: { images: AboutImage[] }) {
-  return (
-    <div className="columns-2 sm:columns-3 gap-2 space-y-2">
-      {images.map((img, i) => (
-        <div key={img.asset._id} className="break-inside-avoid overflow-hidden">
-          <Image
-            src={img.asset.url}
-            alt={img.alt || `Photo ${i + 1}`}
-            width={img.asset.metadata?.dimensions?.width || 400}
-            height={img.asset.metadata?.dimensions?.height || 300}
-            placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
-            blurDataURL={img.asset.metadata?.lqip}
-            className="w-full object-cover"
-          />
-        </div>
-      ))}
-    </div>
+    </>
   )
 }
 
@@ -62,30 +38,26 @@ export default async function AboutPage() {
       <main className="pt-16 pb-24">
         <div className="mt-16 space-y-12">
 
-          {/* Top images — horizontal strip, full bleed (only when multiple images set) */}
-          {settings?.aboutImagesTop && settings.aboutImagesTop.length > 0 && (
-            <section>
-              <AboutImageStrip images={settings.aboutImagesTop} />
-            </section>
-          )}
-
-          {/* Bio + rest in constrained width */}
+          {/* All content in constrained column */}
           <div className="max-w-2xl mx-auto px-6 space-y-12">
 
-            {/* Legacy single about image — shown inside the constrained column */}
-            {(!settings?.aboutImagesTop || settings.aboutImagesTop.length === 0) && settings?.aboutImage?.asset?.url && (
-              <section>
-                <Image
-                  src={settings.aboutImage.asset.url}
-                  alt={settings.aboutImage.alt || 'About'}
-                  width={settings.aboutImage.asset.metadata?.dimensions?.width || 800}
-                  height={settings.aboutImage.asset.metadata?.dimensions?.height || 600}
-                  placeholder={settings.aboutImage.asset.metadata?.lqip ? 'blur' : 'empty'}
-                  blurDataURL={settings.aboutImage.asset.metadata?.lqip}
-                  className="w-full object-cover"
-                />
-              </section>
-            )}
+            {/* Images above bio */}
+            {settings?.aboutImagesTop && settings.aboutImagesTop.length > 0
+              ? <AboutImages images={settings.aboutImagesTop} />
+              : settings?.aboutImage?.asset?.url && (
+                <section>
+                  <Image
+                    src={settings.aboutImage.asset.url}
+                    alt={settings.aboutImage.alt || 'About'}
+                    width={settings.aboutImage.asset.metadata?.dimensions?.width || 800}
+                    height={settings.aboutImage.asset.metadata?.dimensions?.height || 600}
+                    placeholder={settings.aboutImage.asset.metadata?.lqip ? 'blur' : 'empty'}
+                    blurDataURL={settings.aboutImage.asset.metadata?.lqip}
+                    className="w-full h-auto block"
+                  />
+                </section>
+              )
+            }
 
             {/* Bio */}
             <section>
@@ -147,18 +119,16 @@ export default async function AboutPage() {
               </section>
             )}
 
-          </div>
+            {/* Images below bio */}
+            {settings?.aboutImagesBottom && settings.aboutImagesBottom.length > 0 && (
+              <AboutImages images={settings.aboutImagesBottom} />
+            )}
 
-          {/* Bottom images — full bleed masonry grid */}
-          {settings?.aboutImagesBottom && settings.aboutImagesBottom.length > 0 && (
-            <section className="max-w-4xl mx-auto px-6">
-              <AboutImageGrid images={settings.aboutImagesBottom} />
-            </section>
-          )}
+          </div>
 
           {/* Graffiti gallery */}
           {graffiti && graffiti.length > 0 && (
-            <section className="max-w-4xl mx-auto px-6 space-y-6">
+            <section className="max-w-2xl mx-auto px-6 space-y-6">
               <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)]">Tags</h2>
               <div className="columns-2 sm:columns-3 md:columns-4 gap-3 space-y-3">
                 {graffiti.map(tag => tag.image?.asset?.url && (
