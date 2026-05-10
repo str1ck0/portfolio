@@ -274,8 +274,7 @@ export default function GraffitiCanvas() {
       })
       if (!res.ok) throw new Error()
       setStatus('saved')
-      clearAll()
-      setTimeout(() => setStatus('idle'), 3000)
+      setTimeout(clearAll, 3000)
     } catch {
       setStatus('error')
       setTimeout(() => setStatus('idle'), 3000)
