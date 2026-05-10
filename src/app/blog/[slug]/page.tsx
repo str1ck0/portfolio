@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import Header from '@/components/Header'
 import { PortableText } from '@portabletext/react'
-import { getBlogPostBySlug, getAllBlogPosts } from '@/lib/sanity'
+import { getBlogPostBySlug, getAllBlogPosts, urlFor } from '@/lib/sanity'
 
 export const revalidate = 60
 
@@ -43,13 +43,15 @@ function getVimeoId(url: string) {
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 const portableTextComponents: Parameters<typeof PortableText>[0]['components'] = {
   types: {
-    image: ({ value }: { value: { asset?: { url: string; metadata?: { dimensions?: { width: number; height: number }; lqip?: string } }; alt?: string; caption?: string } }) => {
+    image: ({ value }: { value: { asset?: { _id?: string; url: string; metadata?: { dimensions?: { width: number; height: number }; lqip?: string } }; crop?: { top: number; bottom: number; left: number; right: number }; hotspot?: { x: number; y: number }; alt?: string; caption?: string } }) => {
       if (!value?.asset?.url) return null
-      const { width = 800, height = 600 } = value.asset.metadata?.dimensions || {}
+      const { width: origW = 800, height: origH = 600 } = value.asset.metadata?.dimensions || {}
+      const width = Math.round(origW * (1 - (value.crop?.left || 0) - (value.crop?.right || 0)))
+      const height = Math.round(origH * (1 - (value.crop?.top || 0) - (value.crop?.bottom || 0)))
       return (
         <figure className="my-8">
           <Image
-            src={value.asset.url}
+            src={urlFor(value).width(1200).quality(85).auto('format').url()}
             alt={value.alt || ''}
             width={width}
             height={height}
@@ -156,10 +158,10 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
             {post.featuredImage && (
               <div className="mb-10">
                 <Image
-                  src={post.featuredImage.asset.url}
+                  src={urlFor(post.featuredImage).width(1200).quality(85).auto('format').url()}
                   alt={post.featuredImage.alt || post.title}
-                  width={post.featuredImage.asset.metadata?.dimensions?.width || 800}
-                  height={post.featuredImage.asset.metadata?.dimensions?.height || 500}
+                  width={Math.round((post.featuredImage.asset.metadata?.dimensions?.width || 800) * (1 - (post.featuredImage.crop?.left || 0) - (post.featuredImage.crop?.right || 0)))}
+                  height={Math.round((post.featuredImage.asset.metadata?.dimensions?.height || 500) * (1 - (post.featuredImage.crop?.top || 0) - (post.featuredImage.crop?.bottom || 0)))}
                   className="w-full object-cover"
                   placeholder={post.featuredImage.asset.metadata?.lqip ? 'blur' : 'empty'}
                   blurDataURL={post.featuredImage.asset.metadata?.lqip}

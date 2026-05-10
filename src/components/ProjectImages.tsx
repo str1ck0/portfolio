@@ -21,9 +21,12 @@ export default function ProjectImages({ images, projectTitle }: { images: Projec
       <div className="flex flex-col gap-3">
         {images.map((image, i) => {
           if (!image.asset) return null
-          const w = image.asset.metadata?.dimensions?.width || 1200
-          const h = image.asset.metadata?.dimensions?.height || 800
-          const src = urlFor(image.asset).width(1200).quality(85).auto('format').url()
+          const origW = image.asset.metadata?.dimensions?.width || 1200
+          const origH = image.asset.metadata?.dimensions?.height || 800
+          const crop = image.crop
+          const w = Math.round(origW * (1 - (crop?.left || 0) - (crop?.right || 0)))
+          const h = Math.round(origH * (1 - (crop?.top || 0) - (crop?.bottom || 0)))
+          const src = urlFor(image).width(1200).quality(85).auto('format').url()
           return (
             <div key={image._key}>
               <button
@@ -68,10 +71,10 @@ export default function ProjectImages({ images, projectTitle }: { images: Projec
             onClick={e => e.stopPropagation()}
           >
             <Image
-              src={lightbox.asset.url}
+              src={urlFor(lightbox).quality(100).url()}
               alt={lightbox.alt || projectTitle}
-              width={lightbox.asset.metadata?.dimensions?.width || 2400}
-              height={lightbox.asset.metadata?.dimensions?.height || 1600}
+              width={Math.round((lightbox.asset.metadata?.dimensions?.width || 2400) * (1 - (lightbox.crop?.left || 0) - (lightbox.crop?.right || 0)))}
+              height={Math.round((lightbox.asset.metadata?.dimensions?.height || 1600) * (1 - (lightbox.crop?.top || 0) - (lightbox.crop?.bottom || 0)))}
               className="max-w-[95vw] max-h-[95vh] object-contain"
               quality={100}
               unoptimized

@@ -48,6 +48,8 @@ export const galleryImagesQuery = `
       alt,
       caption,
       gridSpan,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -78,6 +80,8 @@ export const allProjectsQuery = `
       alt,
       caption,
       gridSpan,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -108,6 +112,8 @@ export const projectsByTagQuery = `
       alt,
       caption,
       gridSpan,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -138,6 +144,8 @@ export const projectBySlugQuery = `
       alt,
       caption,
       gridSpan,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -162,6 +170,8 @@ export const allBlogPostsQuery = `
     tags,
     "featuredImage": featuredImage {
       alt,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -196,6 +206,8 @@ export const blogPostBySlugQuery = `
     },
     "featuredImage": featuredImage {
       alt,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -218,6 +230,8 @@ export const siteSettingsQuery = `
     extendedAbout,
     "aboutImage": aboutImage {
       alt,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -229,6 +243,8 @@ export const siteSettingsQuery = `
     },
     "aboutImagesTop": aboutImagesTop[] {
       alt,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -240,6 +256,8 @@ export const siteSettingsQuery = `
     },
     "aboutImagesBottom": aboutImagesBottom[] {
       alt,
+      crop,
+      hotspot,
       asset-> {
         _id,
         url,
@@ -344,11 +362,27 @@ export interface GalleryProject {
   images: ProjectImage[]
 }
 
+export interface SanityImageCrop {
+  top: number
+  bottom: number
+  left: number
+  right: number
+}
+
+export interface SanityImageHotspot {
+  x: number
+  y: number
+  width: number
+  height: number
+}
+
 export interface ProjectImage {
   _key: string
   alt?: string
   caption?: string
   gridSpan?: number
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
   asset: {
     _id: string
     url: string
@@ -369,6 +403,8 @@ export interface BlogPost {
   tags?: string[]
   featuredImage?: {
     alt?: string
+    crop?: SanityImageCrop
+    hotspot?: SanityImageHotspot
     asset: {
       _id: string
       url: string
@@ -382,6 +418,8 @@ export interface BlogPost {
 
 export interface AboutImage {
   alt?: string
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
   asset: {
     _id: string
     url: string

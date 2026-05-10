@@ -57,8 +57,11 @@ export default function Gallery({ data }: { data: GalleryProject[] }) {
         })
       }
       for (const img of p.images ?? []) {
-        const w = img.asset.metadata?.dimensions?.width || 1
-        const h = img.asset.metadata?.dimensions?.height || 1
+        const origW = img.asset.metadata?.dimensions?.width || 1
+        const origH = img.asset.metadata?.dimensions?.height || 1
+        const crop = img.crop
+        const w = origW * (1 - (crop?.left || 0) - (crop?.right || 0))
+        const h = origH * (1 - (crop?.top || 0) - (crop?.bottom || 0))
         raw.push({
           key: `${p.projectSlug}-${img._key}`,
           image: img,
@@ -118,10 +121,10 @@ function GalleryCard({ item, priority }: { item: GalleryItem; priority?: boolean
           />
         ) : image ? (
           <Image
-            src={urlFor(image.asset).width(1400).quality(92).auto('format').url()}
+            src={urlFor(image).width(1400).quality(92).auto('format').url()}
             alt={image.alt || projectTitle}
-            width={image.asset.metadata?.dimensions?.width || 800}
-            height={image.asset.metadata?.dimensions?.height || 600}
+            width={Math.round((image.asset.metadata?.dimensions?.width || 800) * (1 - (image.crop?.left || 0) - (image.crop?.right || 0)))}
+            height={Math.round((image.asset.metadata?.dimensions?.height || 600) * (1 - (image.crop?.top || 0) - (image.crop?.bottom || 0)))}
             className="w-full h-auto block"
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
             priority={priority}

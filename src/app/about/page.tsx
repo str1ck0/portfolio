@@ -1,6 +1,6 @@
 import Header from '@/components/Header'
 import { PortableText } from '@portabletext/react'
-import { getSiteSettings, getGraffiti, type AboutImage } from '@/lib/sanity'
+import { getSiteSettings, getGraffiti, urlFor, type AboutImage } from '@/lib/sanity'
 import Image from 'next/image'
 
 export const revalidate = 60
@@ -15,10 +15,10 @@ function AboutImages({ images }: { images: AboutImage[] }) {
       {images.map((img, i) => (
         <section key={img.asset._id}>
           <Image
-            src={img.asset.url}
+            src={urlFor(img).width(1200).quality(85).auto('format').url()}
             alt={img.alt || `Photo ${i + 1}`}
-            width={img.asset.metadata?.dimensions?.width || 800}
-            height={img.asset.metadata?.dimensions?.height || 600}
+            width={Math.round((img.asset.metadata?.dimensions?.width || 800) * (1 - (img.crop?.left || 0) - (img.crop?.right || 0)))}
+            height={Math.round((img.asset.metadata?.dimensions?.height || 600) * (1 - (img.crop?.top || 0) - (img.crop?.bottom || 0)))}
             placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
             blurDataURL={img.asset.metadata?.lqip}
             className="w-full h-auto block"
@@ -47,10 +47,10 @@ export default async function AboutPage() {
               : settings?.aboutImage?.asset?.url && (
                 <section>
                   <Image
-                    src={settings.aboutImage.asset.url}
+                    src={urlFor(settings.aboutImage).width(1200).quality(85).auto('format').url()}
                     alt={settings.aboutImage.alt || 'About'}
-                    width={settings.aboutImage.asset.metadata?.dimensions?.width || 800}
-                    height={settings.aboutImage.asset.metadata?.dimensions?.height || 600}
+                    width={Math.round((settings.aboutImage.asset.metadata?.dimensions?.width || 800) * (1 - (settings.aboutImage.crop?.left || 0) - (settings.aboutImage.crop?.right || 0)))}
+                    height={Math.round((settings.aboutImage.asset.metadata?.dimensions?.height || 600) * (1 - (settings.aboutImage.crop?.top || 0) - (settings.aboutImage.crop?.bottom || 0)))}
                     placeholder={settings.aboutImage.asset.metadata?.lqip ? 'blur' : 'empty'}
                     blurDataURL={settings.aboutImage.asset.metadata?.lqip}
                     className="w-full h-auto block"
