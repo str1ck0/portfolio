@@ -35,11 +35,11 @@ export default async function AboutPage() {
   return (
     <>
       <Header />
-      <main className="pt-16 pb-24">
-        <div className="mt-16 space-y-12">
+      <main className="pt-16 pb-20">
+        <div className="mt-8 sm:mt-14 space-y-8 sm:space-y-12">
 
           {/* All content in constrained column */}
-          <div className="max-w-2xl mx-auto px-6 space-y-12">
+          <div className="max-w-2xl mx-auto px-5 sm:px-6 space-y-8 sm:space-y-12">
 
             {/* Images above bio */}
             {settings?.aboutImagesTop && settings.aboutImagesTop.length > 0
@@ -61,14 +61,14 @@ export default async function AboutPage() {
 
             {/* Bio */}
             <section>
-              <p className="text-lg leading-relaxed">
+              <p className="text-base sm:text-lg leading-relaxed">
                 {settings?.aboutText || 'Designer, developer, writer. Based wherever the work takes me.'}
               </p>
             </section>
 
             {/* Extended About */}
             {settings?.extendedAbout && (
-              <section className="font-moonlight prose prose-lg max-w-none text-[var(--fg)] prose-p:text-[var(--fg)] prose-headings:text-[var(--fg)] prose-a:text-[var(--fg)]">
+              <section className="font-moonlight prose prose-base sm:prose-lg max-w-none text-[var(--fg)] prose-p:text-[var(--fg)] prose-headings:text-[var(--fg)] prose-a:text-[var(--fg)]">
                 <PortableText value={settings.extendedAbout as Parameters<typeof PortableText>[0]['value']} />
               </section>
             )}
@@ -76,7 +76,7 @@ export default async function AboutPage() {
             {/* Disciplines */}
             {settings?.stack && settings.stack.length > 0 && (
               <section>
-                <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-4">Disciplines</h2>
+                <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-3">Disciplines</h2>
                 <ul className="space-y-1">
                   {settings.stack.map((item) => (
                     <li key={item} className="text-sm"><span className="text-lg">⟣ </span>{item}</li>
@@ -85,72 +85,76 @@ export default async function AboutPage() {
               </section>
             )}
 
-            {/* Contact */}
-            {settings?.email && (
-              <section>
-                <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-4">Contact</h2>
-                <a
-                  href={`mailto:${settings.email}`}
-                  className="text-sm border-b border-[var(--fg)] pb-px hover:opacity-50 transition-opacity"
-                >
-                  {settings.email}
-                </a>
-              </section>
-            )}
+            {/* Contact + Elsewhere side by side on mobile */}
+            <div className="flex flex-col sm:flex-row gap-8 sm:gap-16">
+              {settings?.email && (
+                <section>
+                  <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-3">Contact</h2>
+                  <a
+                    href={`mailto:${settings.email}`}
+                    className="text-sm border-b border-[var(--fg)] pb-px hover:opacity-50 transition-opacity"
+                  >
+                    {settings.email}
+                  </a>
+                </section>
+              )}
 
-            {/* Elsewhere */}
-            {settings?.social && settings.social.length > 0 && (
-              <section>
-                <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-4">Elsewhere</h2>
-                <ul className="space-y-2">
-                  {settings.social.map((link) => (
-                    <li key={link.platform}>
-                      <a
-                        href={link.url}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-sm hover:opacity-50 transition-opacity"
-                      >
-                        {link.platform} ➺
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-              </section>
-            )}
+              {settings?.social && settings.social.length > 0 && (
+                <section>
+                  <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)] mb-3">Elsewhere</h2>
+                  <ul className="space-y-1.5">
+                    {settings.social.map((link) => (
+                      <li key={link.platform}>
+                        <a
+                          href={link.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-sm hover:opacity-50 transition-opacity"
+                        >
+                          {link.platform} ➺
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </section>
+              )}
+            </div>
 
             {/* Images below bio */}
             {settings?.aboutImagesBottom && settings.aboutImagesBottom.length > 0 && (
               <AboutImages images={settings.aboutImagesBottom} />
             )}
 
+            {/* Copyright */}
+            <p className="text-[10px] font-bold tracking-widest uppercase text-[var(--fg-muted)] pt-2 border-t border-[var(--border)] text-center">
+              © {new Date().getFullYear()} Liam Strickland
+            </p>
+
           </div>
 
           {/* Graffiti gallery */}
           {graffiti && graffiti.length > 0 && (
-            <section className="max-w-2xl mx-auto px-6 space-y-6">
+            <section className="max-w-2xl mx-auto px-5 sm:px-6 space-y-4">
               <h2 className="text-xs uppercase tracking-widest text-[var(--fg-muted)]">Tags</h2>
-              <div className="columns-2 sm:columns-3 md:columns-4 gap-3 space-y-3">
+              <div className="columns-2 sm:columns-3 gap-2">
                 {graffiti.map(tag => tag.image?.asset?.url && (
                   <div
                     key={tag._id}
-                    className="break-inside-avoid border border-[var(--border)] overflow-hidden bg-[var(--bg-alt,var(--bg))]"
+                    className="break-inside-avoid mb-2 border border-[var(--border)] overflow-hidden"
                   >
                     <Image
                       src={tag.image.asset.url}
                       alt="Visitor tag"
                       width={tag.image.asset.metadata?.dimensions?.width || 400}
                       height={tag.image.asset.metadata?.dimensions?.height || 300}
-                      className="w-full object-contain"
+                      className="w-full h-auto block"
                       placeholder={tag.image.asset.metadata?.lqip ? 'blur' : 'empty'}
                       blurDataURL={tag.image.asset.metadata?.lqip}
                     />
                   </div>
                 ))}
               </div>
-              <p className="text-xs text-[var(--fg-muted)]">
-                Tags left by visitors. Leave yours with the marker icon ↘
-              </p>
+              <p className="text-xs text-[var(--fg-muted)]">Tags left by visitors — leave yours ↘</p>
             </section>
           )}
 
