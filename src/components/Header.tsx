@@ -63,7 +63,7 @@ export default function Header() {
               pathname.startsWith('/blog') ? 'opacity-100' : 'opacity-40 hover:opacity-100'
             }`}
           >
-            Blog
+            Thoughts
           </Link>
           <Link
             href="/about"
