@@ -272,10 +272,14 @@ export default function GraffitiCanvas() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ imageData: base64 }),
       })
-      if (!res.ok) throw new Error()
+      if (!res.ok) {
+        const body = await res.json().catch(() => ({}))
+        throw new Error(body.detail || body.error || `HTTP ${res.status}`)
+      }
       setStatus('saved')
       setTimeout(clearAll, 3000)
-    } catch {
+    } catch (err) {
+      console.error('Graffiti save failed:', err)
       setStatus('error')
       setTimeout(() => setStatus('idle'), 3000)
     }

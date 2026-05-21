@@ -32,13 +32,14 @@ export async function POST(req: NextRequest) {
         _type: 'image',
         asset: { _type: 'reference', _ref: asset._id },
       },
-      approved: false,
+      approved: true,
       submittedAt: new Date().toISOString(),
     })
 
     return NextResponse.json({ success: true })
   } catch (err) {
+    const detail = err instanceof Error ? err.message : String(err)
     console.error('Graffiti save error:', err)
-    return NextResponse.json({ error: 'Failed to save' }, { status: 500 })
+    return NextResponse.json({ error: 'Failed to save', detail }, { status: 500 })
   }
 }
