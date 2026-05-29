@@ -28,6 +28,27 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: 'kind',
+      title: 'Kind',
+      type: 'string',
+      options: {
+        list: [
+          { title: 'Essay', value: 'Essay' },
+          { title: 'Launch', value: 'Launch' },
+          { title: 'Studio log', value: 'Studio log' },
+          { title: 'Note', value: 'Note' },
+        ],
+        layout: 'radio',
+      },
+      description: 'Shown as a tag in the homepage Recently section',
+    }),
+    defineField({
+      name: 'cta',
+      title: 'CTA Label',
+      type: 'string',
+      description: 'Override the call-to-action label in the Recently section (e.g. "9 min read", "View project →")',
+    }),
+    defineField({
       name: 'excerpt',
       title: 'Excerpt',
       type: 'text',

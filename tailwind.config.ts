@@ -16,6 +16,16 @@ const config: Config = {
         mono: ['var(--font-mono)', ...fontFamily.mono],
       },
       colors: {
+        // new design tokens
+        'ls-bg': 'var(--ls-bg)',
+        'ls-bg-elev': 'var(--ls-bg-elev)',
+        'ls-fg': 'var(--ls-fg)',
+        'ls-fg-dim': 'var(--ls-fg-dim)',
+        'ls-muted': 'var(--ls-muted)',
+        'ls-line': 'var(--ls-line)',
+        'ls-line-soft': 'var(--ls-line-soft)',
+        'ls-accent': 'var(--ls-accent)',
+        // backward compat
         bg: 'var(--bg)',
         fg: 'var(--fg)',
         'fg-muted': 'var(--fg-muted)',

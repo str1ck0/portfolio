@@ -6,7 +6,6 @@ export const projectId = process.env.NEXT_PUBLIC_SANITY_PROJECT_ID || ''
 export const dataset = process.env.NEXT_PUBLIC_SANITY_DATASET || 'production'
 const apiVersion = '2024-01-01'
 
-// Only create client if we have a project ID
 export const client = projectId
   ? createClient({
       projectId,
@@ -16,16 +15,16 @@ export const client = projectId
     })
   : null
 
-// Image URL builder (only create if client exists)
 const builder = client ? imageUrlBuilder(client) : null
 
 export function urlFor(source: SanityImageSource) {
   if (!builder) {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const dummyBuilder: any = {
+    const dummyBuilder: any = {
       width: () => dummyBuilder,
       height: () => dummyBuilder,
       quality: () => dummyBuilder,
+      auto: () => dummyBuilder,
       url: () => '',
     }
     return dummyBuilder
@@ -37,129 +36,125 @@ export function urlFor(source: SanityImageSource) {
 // GROQ Queries
 // ============================================
 
-// Get all images marked showOnGallery, flat list with project context
-export const galleryImagesQuery = `
-  *[_type == "project" && (count(images[showOnGallery == true]) > 0 || defined(video))] | order(order asc) {
-    "projectTitle": title,
-    "projectSlug": slug.current,
-    "video": video.asset->url,
-    "images": images[showOnGallery == true] {
-      _key,
-      alt,
-      caption,
-      gridSpan,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    }
+const imageFields = `
+  alt,
+  crop,
+  hotspot,
+  asset-> {
+    _id,
+    url,
+    metadata { dimensions, lqip }
   }
 `
 
-// Get all projects
+// Homepage: selected work index
+export const indexProjectsQuery = `
+  *[_type == "project" && !(display in ["archive", "hidden"])] | order(order asc) [0...6] {
+    _id,
+    title,
+    "slug": slug.current,
+    year,
+    kind,
+    role,
+    "cover": coalesce(cover, images[0]) { ${imageFields} }
+  }
+`
+
+// Homepage: archive section
+export const archiveProjectsQuery = `
+  *[_type == "project" && display == "archive"] | order(year desc) {
+    _id,
+    title,
+    "slug": slug.current,
+    year,
+    kind,
+    role
+  }
+`
+
+// Homepage: recently section (3 latest posts)
+export const recentPostsQuery = `
+  *[_type == "blogPost"] | order(publishedAt desc) [0...3] {
+    _id,
+    title,
+    "slug": slug.current,
+    publishedAt,
+    excerpt,
+    kind,
+    cta,
+    "cover": featuredImage { ${imageFields} }
+  }
+`
+
+// All projects (used for generateStaticParams)
 export const allProjectsQuery = `
   *[_type == "project"] | order(order asc) {
     _id,
     title,
     slug,
-    featured,
+    year,
+    kind,
+    role,
+    blurb,
     description,
-    fullDescription,
+    featured,
     tags,
     technologies,
-    year,
     "video": video.asset->url,
     "images": images[] {
-      _key,
-      alt,
-      caption,
-      gridSpan,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
+      _key, alt, caption, gridSpan, crop, hotspot,
+      asset-> { _id, url, metadata { dimensions, lqip } }
     },
     links
   }
 `
 
-// Get projects by tag
-export const projectsByTagQuery = `
-  *[_type == "project" && $tag in tags] | order(order asc) {
-    _id,
-    title,
-    slug,
-    featured,
-    description,
-    tags,
-    technologies,
-    year,
-    "video": video.asset->url,
-    "images": images[] {
-      _key,
-      alt,
-      caption,
-      gridSpan,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    },
-    links
-  }
-`
-
-// Get single project by slug
+// Single project detail (case study)
 export const projectBySlugQuery = `
   *[_type == "project" && slug.current == $slug][0] {
     _id,
     title,
     slug,
+    blurb,
     description,
-    fullDescription,
-    tags,
+    kind,
+    role,
+    collaborators,
     technologies,
     year,
+    links,
     "video": video.asset->url,
-    "images": images[] {
-      _key,
-      alt,
-      caption,
-      gridSpan,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
+    "cover": coalesce(cover, images[0]) { ${imageFields} },
+    "body": body[] {
+      ...,
+      _type == "pairedImages" => {
+        "imageA": imageA { ${imageFields} },
+        "imageB": imageB { ${imageFields} }
+      },
+      _type == "fullBleedImage" => {
+        "image": image { ${imageFields} }
       }
     },
-    links
+    fullDescription,
+    "images": images[] {
+      _key, alt, caption, gridSpan, crop, hotspot,
+      asset-> { _id, url, metadata { dimensions, lqip } }
+    }
   }
 `
 
-// Get all blog posts
+// Lightweight project list for next-project navigation
+export const projectNavQuery = `
+  *[_type == "project" && !(display in ["archive", "hidden"])] | order(order asc) {
+    _id,
+    title,
+    "slug": slug.current,
+    year,
+    role
+  }
+`
+
+// All blog posts (used by blog page)
 export const allBlogPostsQuery = `
   *[_type == "blogPost"] | order(publishedAt desc) {
     _id,
@@ -167,24 +162,13 @@ export const allBlogPostsQuery = `
     slug,
     publishedAt,
     excerpt,
+    kind,
     tags,
-    "featuredImage": featuredImage {
-      alt,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    }
+    "featuredImage": featuredImage { ${imageFields} }
   }
 `
 
-// Get single blog post by slug
+// Single blog post
 export const blogPostBySlugQuery = `
   *[_type == "blogPost" && slug.current == $slug][0] {
     _id,
@@ -192,6 +176,7 @@ export const blogPostBySlugQuery = `
     slug,
     publishedAt,
     excerpt,
+    kind,
     tags,
     "body": body[] {
       ...,
@@ -204,91 +189,7 @@ export const blogPostBySlugQuery = `
         }
       }
     },
-    "featuredImage": featuredImage {
-      alt,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    }
-  }
-`
-
-// Get site settings
-export const siteSettingsQuery = `
-  *[_type == "siteSettings"][0] {
-    _id,
-    name,
-    aboutText,
-    aboutLinks,
-    extendedAbout,
-    "aboutImage": aboutImage {
-      alt,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    },
-    "aboutImagesTop": aboutImagesTop[] {
-      alt,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    },
-    "aboutImagesBottom": aboutImagesBottom[] {
-      alt,
-      crop,
-      hotspot,
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    },
-    stack,
-    email,
-    social,
-    galleryInterval
-  }
-`
-
-// Get approved graffiti tags
-export const graffitiQuery = `
-  *[_type == "graffiti" && approved == true] | order(submittedAt desc) {
-    _id,
-    submittedAt,
-    "image": image {
-      asset-> {
-        _id,
-        url,
-        metadata {
-          dimensions,
-          lqip
-        }
-      }
-    }
+    "featuredImage": featuredImage { ${imageFields} }
   }
 `
 
@@ -296,9 +197,19 @@ export const graffitiQuery = `
 // Fetcher Functions
 // ============================================
 
-export async function getGalleryImages(): Promise<GalleryProject[]> {
+export async function getIndexProjects(): Promise<IndexProject[]> {
   if (!client) return []
-  return client.fetch(galleryImagesQuery)
+  return client.fetch(indexProjectsQuery)
+}
+
+export async function getArchiveProjects(): Promise<ArchiveProject[]> {
+  if (!client) return []
+  return client.fetch(archiveProjectsQuery)
+}
+
+export async function getRecentPosts(): Promise<RecentPost[]> {
+  if (!client) return []
+  return client.fetch(recentPostsQuery)
 }
 
 export async function getAllProjects(): Promise<Project[]> {
@@ -306,14 +217,14 @@ export async function getAllProjects(): Promise<Project[]> {
   return client.fetch(allProjectsQuery)
 }
 
-export async function getProjectsByTag(tag: string): Promise<Project[]> {
-  if (!client) return []
-  return client.fetch(projectsByTagQuery, { tag } as Record<string, string>)
-}
-
-export async function getProjectBySlug(slug: string): Promise<Project | null> {
+export async function getProjectBySlug(slug: string): Promise<ProjectDetail | null> {
   if (!client) return null
   return client.fetch(projectBySlugQuery, { slug })
+}
+
+export async function getProjectNav(): Promise<ProjectNav[]> {
+  if (!client) return []
+  return client.fetch(projectNavQuery)
 }
 
 export async function getAllBlogPosts(): Promise<BlogPost[]> {
@@ -326,27 +237,119 @@ export async function getBlogPostBySlug(slug: string): Promise<BlogPost | null> 
   return client.fetch(blogPostBySlugQuery, { slug })
 }
 
-export async function getSiteSettings(): Promise<SiteSettings | null> {
-  if (!client) return null
-  return client.fetch(siteSettingsQuery)
-}
-
-export async function getGraffiti(): Promise<GraffitiTag[]> {
-  if (!client) return []
-  return client.fetch(graffitiQuery)
-}
-
 // ============================================
 // Types
 // ============================================
 
+export interface SanityImageCrop {
+  top: number; bottom: number; left: number; right: number
+}
+
+export interface SanityImageHotspot {
+  x: number; y: number; width: number; height: number
+}
+
+export interface SanityImageAsset {
+  _id: string
+  url: string
+  metadata?: {
+    dimensions?: { width: number; height: number }
+    lqip?: string
+  }
+}
+
+export interface SanityImage {
+  alt?: string
+  crop?: SanityImageCrop
+  hotspot?: SanityImageHotspot
+  asset: SanityImageAsset
+}
+
+export interface ProjectImage extends SanityImage {
+  _key: string
+  caption?: string
+  gridSpan?: number
+}
+
+// Homepage index project
+export interface IndexProject {
+  _id: string
+  title: string
+  slug: string
+  year?: number
+  kind?: string
+  role?: string
+  cover?: SanityImage
+}
+
+// Homepage archive project
+export interface ArchiveProject {
+  _id: string
+  title: string
+  slug: string
+  year?: number
+  kind?: string
+  role?: string
+}
+
+// Homepage recently post
+export interface RecentPost {
+  _id: string
+  title: string
+  slug: string
+  publishedAt: string
+  excerpt?: string
+  kind?: string
+  cta?: string
+  cover?: SanityImage
+}
+
+// Lightweight nav project
+export interface ProjectNav {
+  _id: string
+  title: string
+  slug: string
+  year?: number
+  role?: string
+}
+
+// Full project (for detail page)
+export interface ProjectDetail {
+  _id: string
+  title: string
+  slug: { current: string }
+  blurb?: string
+  description?: string
+  kind?: string
+  role?: string
+  collaborators?: string
+  technologies?: string[]
+  year?: number
+  video?: string
+  cover?: SanityImage
+  body?: CaseStudyBlock[]
+  fullDescription?: unknown[]
+  images?: ProjectImage[]
+  links?: { title: string; url: string }[]
+}
+
+export type CaseStudyBlock =
+  | { _key: string; _type: 'block'; [k: string]: unknown }
+  | { _key: string; _type: 'sectionHeading'; heading: string }
+  | { _key: string; _type: 'monoQuote'; text: string }
+  | { _key: string; _type: 'pairedImages'; imageA?: SanityImage; imageB?: SanityImage }
+  | { _key: string; _type: 'fullBleedImage'; image?: SanityImage }
+
+// Full project (legacy list)
 export interface Project {
   _id: string
   title: string
   slug: { current: string }
   featured?: boolean
   description?: string
-  fullDescription?: unknown[]
+  blurb?: string
+  kind?: string
+  role?: string
   tags?: string[]
   technologies?: string[]
   year?: number
@@ -355,6 +358,21 @@ export interface Project {
   links?: { title: string; url: string }[]
 }
 
+// Blog post
+export interface BlogPost {
+  _id: string
+  title: string
+  slug: { current: string }
+  publishedAt: string
+  excerpt?: string
+  kind?: string
+  cta?: string
+  body?: unknown[]
+  tags?: string[]
+  featuredImage?: SanityImage
+}
+
+// Legacy (kept for Gallery component backward compat)
 export interface GalleryProject {
   projectTitle: string
   projectSlug: string
@@ -362,102 +380,13 @@ export interface GalleryProject {
   images: ProjectImage[]
 }
 
-export interface SanityImageCrop {
-  top: number
-  bottom: number
-  left: number
-  right: number
-}
-
-export interface SanityImageHotspot {
-  x: number
-  y: number
-  width: number
-  height: number
-}
-
-export interface ProjectImage {
-  _key: string
-  alt?: string
-  caption?: string
-  gridSpan?: number
-  crop?: SanityImageCrop
-  hotspot?: SanityImageHotspot
-  asset: {
-    _id: string
-    url: string
-    metadata?: {
-      dimensions?: { width: number; height: number }
-      lqip?: string
-    }
-  }
-}
-
-export interface BlogPost {
-  _id: string
-  title: string
-  slug: { current: string }
-  publishedAt: string
-  excerpt?: string
-  body?: unknown[]
-  tags?: string[]
-  featuredImage?: {
-    alt?: string
-    crop?: SanityImageCrop
-    hotspot?: SanityImageHotspot
-    asset: {
-      _id: string
-      url: string
-      metadata?: {
-        dimensions?: { width: number; height: number }
-        lqip?: string
-      }
-    }
-  }
-}
-
-export interface AboutImage {
-  alt?: string
-  crop?: SanityImageCrop
-  hotspot?: SanityImageHotspot
-  asset: {
-    _id: string
-    url: string
-    metadata?: {
-      dimensions?: { width: number; height: number }
-      lqip?: string
-    }
-  }
-}
-
 export interface SiteSettings {
   _id: string
   name: string
-  aboutText?: string
-  aboutLinks?: AboutLink[]
-  extendedAbout?: unknown[]
-  aboutImage?: AboutImage
-  aboutImagesTop?: AboutImage[]
-  aboutImagesBottom?: AboutImage[]
-  stack?: string[]
   email?: string
-  social?: SocialLink[]
-  galleryInterval?: number
-}
-
-export interface GraffitiTag {
-  _id: string
-  submittedAt: string
-  image?: {
-    asset: {
-      _id: string
-      url: string
-      metadata?: {
-        dimensions?: { width: number; height: number }
-        lqip?: string
-      }
-    }
-  }
+  social?: { platform: string; url: string }[]
+  homepagePortrait?: SanityImage
+  aboutPortrait?: SanityImage
 }
 
 export interface AboutLink {
@@ -470,4 +399,33 @@ export interface AboutLink {
 export interface SocialLink {
   platform: string
   url: string
+}
+
+// Keep for any remaining usages
+export async function getGalleryImages(): Promise<GalleryProject[]> {
+  if (!client) return []
+  const query = `
+    *[_type == "project" && (count(images[showOnGallery == true]) > 0 || defined(video))] | order(order asc) {
+      "projectTitle": title,
+      "projectSlug": slug.current,
+      "video": video.asset->url,
+      "images": images[showOnGallery == true] {
+        _key, alt, caption, gridSpan, crop, hotspot,
+        asset-> { _id, url, metadata { dimensions, lqip } }
+      }
+    }
+  `
+  return client.fetch(query)
+}
+
+export async function getSiteSettings(): Promise<SiteSettings | null> {
+  if (!client) return null
+  const query = `
+    *[_type == "siteSettings"][0] {
+      _id, name, email, social,
+      "homepagePortrait": homepagePortrait { alt, crop, hotspot, asset-> { _id, url, metadata { dimensions, lqip } } },
+      "aboutPortrait": aboutPortrait { alt, crop, hotspot, asset-> { _id, url, metadata { dimensions, lqip } } }
+    }
+  `
+  return client.fetch(query)
 }

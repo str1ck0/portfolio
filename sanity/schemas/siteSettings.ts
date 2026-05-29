@@ -12,116 +12,20 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'aboutText',
-      title: 'About Text',
-      type: 'text',
-      rows: 3,
-      description: 'e.g. "I write, code, do installations, paint..."',
-    }),
-    defineField({
-      name: 'aboutLinks',
-      title: 'About Text Links',
-      type: 'array',
-      description: 'Words in your about text that become clickable links',
-      of: [
-        {
-          type: 'object',
-          fields: [
-            {
-              name: 'word',
-              title: 'Word',
-              type: 'string',
-              description: 'The word in your about text to make clickable',
-            },
-            {
-              name: 'linkType',
-              title: 'Link Type',
-              type: 'string',
-              options: {
-                list: [
-                  { title: 'Blog', value: 'blog' },
-                  { title: 'Tag Filter', value: 'tag' },
-                  { title: 'External URL', value: 'external' },
-                ],
-              },
-            },
-            {
-              name: 'tag',
-              title: 'Tag',
-              type: 'string',
-              description: 'If Link Type is "Tag Filter", which tag to filter by',
-              hidden: ({ parent }) => parent?.linkType !== 'tag',
-            },
-            {
-              name: 'url',
-              title: 'URL',
-              type: 'url',
-              description: 'If Link Type is "External URL"',
-              hidden: ({ parent }) => parent?.linkType !== 'external',
-            },
-          ],
-          preview: {
-            select: {
-              word: 'word',
-              linkType: 'linkType',
-              tag: 'tag',
-            },
-            prepare({ word, linkType, tag }) {
-              return {
-                title: word,
-                subtitle: linkType === 'tag' ? `→ /work/${tag}` : linkType === 'blog' ? '→ /blog' : 'External',
-              }
-            },
-          },
-        },
-      ],
-    }),
-    defineField({
-      name: 'aboutImage',
-      title: 'About Image (legacy)',
+      name: 'homepagePortrait',
+      title: 'Homepage Portrait',
       type: 'image',
       options: { hotspot: true },
-      hidden: true,
+      description: 'Portrait shown at the bottom of the homepage',
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
     defineField({
-      name: 'aboutImagesTop',
-      title: 'About Images — Top Strip',
-      type: 'array',
-      description: 'A few photos shown above your bio text (horizontal strip)',
-      of: [
-        {
-          type: 'image',
-          options: { hotspot: true },
-          fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
-        },
-      ],
-    }),
-    defineField({
-      name: 'aboutImagesBottom',
-      title: 'About Images — Bottom Grid',
-      type: 'array',
-      description: 'More photos shown below your bio text (grid)',
-      of: [
-        {
-          type: 'image',
-          options: { hotspot: true },
-          fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
-        },
-      ],
-    }),
-    defineField({
-      name: 'extendedAbout',
-      title: 'Extended About',
-      type: 'array',
-      of: [{ type: 'block' }],
-      description: 'Longer about text shown when About section is expanded',
-    }),
-    defineField({
-      name: 'stack',
-      title: 'Disciplines',
-      type: 'array',
-      of: [{ type: 'string' }],
-      description: 'Drag to reorder. e.g. Creative Direction, Software Engineering, Writing',
+      name: 'aboutPortrait',
+      title: 'About Page Portrait',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'Portrait shown on the about page',
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
     }),
     defineField({
       name: 'email',
@@ -149,33 +53,18 @@ export default defineType({
             },
           ],
           preview: {
-            select: {
-              platform: 'platform',
-              url: 'url',
-            },
+            select: { platform: 'platform', url: 'url' },
             prepare({ platform, url }) {
-              return {
-                title: platform,
-                subtitle: url,
-              }
+              return { title: platform, subtitle: url }
             },
           },
         },
       ],
     }),
-    defineField({
-      name: 'galleryInterval',
-      title: 'Gallery Auto-Cycle Interval (seconds)',
-      type: 'number',
-      initialValue: 6,
-      description: 'How often the gallery image changes automatically',
-    }),
   ],
   preview: {
     prepare() {
-      return {
-        title: 'Site Settings',
-      }
+      return { title: 'Site Settings' }
     },
   },
 })

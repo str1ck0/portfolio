@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from '@/components/ThemeProvider'
-import GraffitiCanvas from '@/components/GraffitiCanvas'
+import PageTransition from '@/components/PageTransition'
 import './globals.css'
 
 // Using Geist as default — swap out variable names once you've chosen your typefaces
@@ -36,8 +36,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html lang="en" suppressHydrationWarning>
       <body className={`${fontSans.variable} ${fontMoonlight.variable} ${fontMono.variable} font-sans`}>
         <ThemeProvider>
-          {children}
-          <GraffitiCanvas />
+          <PageTransition>
+            {children}
+          </PageTransition>
         </ThemeProvider>
       </body>
     </html>

@@ -30,49 +30,56 @@ function WavyMenuIcon() {
   )
 }
 
-export default function Header() {
+const NAV_LINKS = [
+  { href: '/', label: 'Work', match: (p: string) => p === '/' },
+  { href: '/blog', label: 'Thoughts', match: (p: string) => p.startsWith('/blog') },
+  { href: '/about', label: 'About', match: (p: string) => p === '/about' },
+]
+
+export default function Header({ showStatus }: { showStatus?: boolean }) {
   const { theme, toggle } = useTheme()
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4 bg-[var(--bg)] border-b border-[var(--border)] transition-colors duration-300">
-        <Link
-          href="/"
-          className="flex items-center gap-2.5 hover:opacity-60 transition-opacity"
-          onClick={() => setMenuOpen(false)}
-        >
-          <Image src="/logo.png" alt="Logo" width={28} height={28} className="flex-shrink-0" />
-          <span className="text-lg font-medium tracking-tight">Liam Strickland</span>
-        </Link>
-
-        {/* Desktop nav */}
-        <nav className="hidden sm:flex items-center gap-6">
+      <nav
+        className="flex items-center justify-between px-5 sm:px-8 lg:px-14"
+        style={{ paddingTop: 26, paddingBottom: 26 }}
+      >
+        {/* Left: logo + name */}
+        <div className="flex items-center gap-3">
           <Link
             href="/"
-            className={`text-sm transition-opacity ${
-              pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-            }`}
+            className="flex items-center gap-2.5 hover:opacity-60 transition-opacity"
+            onClick={() => setMenuOpen(false)}
           >
-            Work
+            <Image src="/logo.png" alt="Logo" width={28} height={28} className="flex-shrink-0" />
+            <span className="font-sans leading-none" style={{ fontSize: 22, letterSpacing: 0 }}>
+              Liam Strickland
+            </span>
           </Link>
-          <Link
-            href="/blog"
-            className={`text-sm transition-opacity ${
-              pathname.startsWith('/blog') ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-            }`}
-          >
-            Thoughts
-          </Link>
-          <Link
-            href="/about"
-            className={`text-sm transition-opacity ${
-              pathname === '/about' ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-            }`}
-          >
-            About
-          </Link>
+          {showStatus && (
+            <span
+              className="hidden lg:inline font-mono uppercase"
+              style={{ fontSize: 11, letterSpacing: '0.08em', color: 'var(--ls-muted)', marginLeft: 14 }}
+            >
+              Independent web dev & design
+            </span>
+          )}
+        </div>
+
+        {/* Desktop: nav links + yin-yang */}
+        <div className="hidden sm:flex items-center gap-[38px] font-sans" style={{ fontSize: 14 }}>
+          {NAV_LINKS.map(({ href, label, match }) => (
+            <Link
+              key={href}
+              href={href}
+              className={`ls-nav-link${match(pathname) ? ' ls-nav-active' : ''}`}
+            >
+              {label}
+            </Link>
+          ))}
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
@@ -81,9 +88,9 @@ export default function Header() {
           >
             <YinYang inverted={theme === 'dark'} />
           </button>
-        </nav>
+        </div>
 
-        {/* Mobile: yin-yang + wavy menu toggle */}
+        {/* Mobile: yin-yang + wavy menu */}
         <div className="flex sm:hidden items-center gap-4">
           <button
             onClick={toggle}
@@ -94,45 +101,32 @@ export default function Header() {
             <YinYang inverted={theme === 'dark'} />
           </button>
           <button
-            onClick={() => setMenuOpen(o => !o)}
+            onClick={() => setMenuOpen((o) => !o)}
             aria-label="Toggle menu"
             className="hover:opacity-50 transition-opacity"
+            style={{ color: 'var(--ls-fg)' }}
           >
             <WavyMenuIcon />
           </button>
         </div>
-      </header>
+      </nav>
 
-      {/* Mobile dropdown menu */}
+      {/* Mobile dropdown */}
       {menuOpen && (
-        <div className="fixed top-[61px] left-0 right-0 z-40 sm:hidden bg-[var(--bg)] border-b border-[var(--border)] flex flex-col items-end px-6 py-4 gap-4 transition-colors duration-300">
-          <Link
-            href="/"
-            onClick={() => setMenuOpen(false)}
-            className={`text-sm transition-opacity ${
-              pathname === '/' ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-            }`}
-          >
-            Work
-          </Link>
-          <Link
-            href="/blog"
-            onClick={() => setMenuOpen(false)}
-            className={`text-sm transition-opacity ${
-              pathname.startsWith('/blog') ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-            }`}
-          >
-            Blog
-          </Link>
-          <Link
-            href="/about"
-            onClick={() => setMenuOpen(false)}
-            className={`text-sm transition-opacity ${
-              pathname === '/about' ? 'opacity-100' : 'opacity-40 hover:opacity-100'
-            }`}
-          >
-            About
-          </Link>
+        <div
+          className="sm:hidden flex flex-col items-end px-6 py-4 gap-4 font-sans border-b"
+          style={{ borderColor: 'var(--ls-line-soft)', background: 'var(--ls-bg)', fontSize: 14 }}
+        >
+          {NAV_LINKS.map(({ href, label, match }) => (
+            <Link
+              key={href}
+              href={href}
+              onClick={() => setMenuOpen(false)}
+              className={`ls-nav-link${match(pathname) ? ' ls-nav-active' : ''}`}
+            >
+              {label}
+            </Link>
+          ))}
         </div>
       )}
     </>
