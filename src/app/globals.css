@@ -189,3 +189,84 @@
     gap: 40px;
   }
 }
+
+/* ─── Case study layout ─────────────────────────────────────────────────────
+   --cs-pad must mirror the page padding (px-5 / sm:px-8 / lg:px-14) so the
+   image break-outs line up with the viewport edges. */
+.ls-cs {
+  --cs-pad: 20px;
+  --cs-aside: 320px;
+  --cs-gap: 64px;
+}
+@media (min-width: 640px) { .ls-cs { --cs-pad: 32px; } }
+@media (min-width: 1024px) { .ls-cs { --cs-pad: 56px; } }
+
+/* title block: stacked on mobile, two columns on md+ */
+.ls-cs-title {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  align-items: start;
+}
+@media (min-width: 768px) {
+  .ls-cs-title {
+    display: grid;
+    grid-template-columns: 1fr var(--cs-aside);
+    gap: 80px;
+    align-items: end;
+  }
+}
+
+/* body: lead (aside) + prose, stacked on mobile */
+.ls-cs-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+@media (min-width: 768px) {
+  .ls-cs-grid {
+    display: grid;
+    grid-template-columns: var(--cs-aside) 1fr;
+    gap: var(--cs-gap);
+    align-items: start;
+  }
+}
+
+/* paired images stack on mobile, side by side on md+ */
+.ls-cs-pair {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+@media (min-width: 768px) {
+  .ls-cs-pair {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+/* break-out helpers (live inside the prose column) */
+.ls-cs-wide,
+.ls-cs-fullbleed {
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+/* wide: full content width, within the page padding (matches the lead/cover image) */
+.ls-cs-wide {
+  width: 100%;
+}
+/* full bleed: extend over the page padding to the viewport edges */
+.ls-cs-fullbleed {
+  width: calc(100% + 2 * var(--cs-pad));
+  margin-left: calc(-1 * var(--cs-pad));
+}
+@media (min-width: 768px) {
+  .ls-cs-wide {
+    width: calc(100% + var(--cs-aside) + var(--cs-gap));
+    margin-left: calc(-1 * (var(--cs-aside) + var(--cs-gap)));
+  }
+  .ls-cs-fullbleed {
+    width: calc(100% + var(--cs-aside) + var(--cs-gap) + 2 * var(--cs-pad));
+    margin-left: calc(-1 * (var(--cs-aside) + var(--cs-gap) + var(--cs-pad)));
+  }
+}

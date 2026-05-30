@@ -92,10 +92,7 @@ function buildPortableTextComponents(sectionCount: { n: number }) {
         </p>
       ),
       pairedImages: ({ value }: { value: { imageA?: SanityImage; imageB?: SanityImage } }) => (
-        <div
-          className="grid gap-6"
-          style={{ gridTemplateColumns: '1fr 1fr', marginTop: 32, marginBottom: 32 }}
-        >
+        <div className="ls-cs-wide ls-cs-pair">
           {value.imageA?.asset && (
             <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
               <SanityImg img={value.imageA} className="w-full h-full object-cover" />
@@ -110,7 +107,7 @@ function buildPortableTextComponents(sectionCount: { n: number }) {
       ),
       fullBleedImage: ({ value }: { value: { image?: SanityImage } }) => (
         value.image?.asset ? (
-          <div style={{ aspectRatio: '21/9', overflow: 'hidden', marginTop: 32, marginBottom: 32 }}>
+          <div className="ls-cs-wide" style={{ aspectRatio: '16/9', overflow: 'hidden' }}>
             <SanityImg img={value.image} className="w-full h-full object-cover" />
           </div>
         ) : null
@@ -179,8 +176,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* TITLE BLOCK */}
         <div
-          className="px-5 sm:px-8 lg:px-14 grid items-end border-b border-ls-line-soft"
-          style={{ paddingTop: 56, paddingBottom: 56, gridTemplateColumns: '1fr 320px', gap: 80 }}
+          className="ls-cs ls-cs-title px-5 sm:px-8 lg:px-14 border-b border-ls-line-soft"
+          style={{ paddingTop: 56, paddingBottom: 56 }}
         >
           <h1
             className="font-sans text-ls-fg m-0"
@@ -199,7 +196,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </h1>
 
           {/* Meta block */}
-          <div>
+          <div className="w-full">
             <MetaRow label="Year" value={project.year?.toString()} />
             <MetaRow label="Discipline" value={project.kind} />
             <MetaRow label="Role" value={project.role} />
@@ -315,15 +312,15 @@ function CaseStudyBody({ project, sectionCount }: {
 
   return (
     <div
-      className="px-5 sm:px-8 lg:px-14 grid items-start"
-      style={{ paddingTop: 96, gridTemplateColumns: '320px 1fr', gap: 64 }}
+      className="ls-cs ls-cs-grid px-5 sm:px-8 lg:px-14"
+      style={{ paddingTop: 'clamp(56px, 8vw, 96px)' }}
     >
       {/* Lead */}
       <div>
         {leadText && (
           <p
             className="font-sans text-ls-fg"
-            style={{ fontSize: 24, lineHeight: 1.3, maxWidth: '30ch', margin: 0 }}
+            style={{ fontSize: 'clamp(20px, 4vw, 24px)', lineHeight: 1.3, maxWidth: '30ch', margin: 0 }}
           >
             {leadText}
           </p>
@@ -331,7 +328,7 @@ function CaseStudyBody({ project, sectionCount }: {
       </div>
 
       {/* Body sections */}
-      <div style={{ display: 'flex', flexDirection: 'column', gap: 36 }}>
+      <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: 36 }}>
         <PortableText
           value={project.body as Parameters<typeof PortableText>[0]['value']}
           components={components as Parameters<typeof PortableText>[0]['components']}
