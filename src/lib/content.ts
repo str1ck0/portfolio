@@ -2,7 +2,7 @@ export const SITE = {
   name: 'Liam Strickland',
   email: 'hello@liamstrickland.dev',
   location: 'Cape Town, ZA',
-  bookingUrl: 'https://cal.com/liamstrickland',
+  bookingUrl: 'https://cal.eu/liamstrickland',
 } as const
 
 export const ABOUT = {

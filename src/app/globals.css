@@ -161,6 +161,7 @@
 .ls-bounce-arrow {
   display: inline-block;
   animation: bounce-y 1.8s ease-in-out infinite;
+  font-size: 1.4em;
 }
 @keyframes bounce-y {
   0%, 100% { transform: translateY(0); }

@@ -51,8 +51,8 @@ function throttle<A extends unknown[]>(func: (...args: A) => void, limit: number
 }
 
 export default function DotGrid({
-  dotSize = 4,
-  gap = 28,
+  dotSize = 2,
+  gap = 14,
   baseColor,
   activeColor,
   proximity = 130,

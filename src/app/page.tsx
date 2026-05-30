@@ -269,7 +269,16 @@ export default async function Home() {
           className="relative px-5 sm:px-8 lg:px-14 flex flex-col gap-8 lg:grid lg:gap-20 lg:items-end"
           style={{ paddingTop: 'clamp(80px, 10vw, 140px)', paddingBottom: 'clamp(80px, 10vw, 140px)', gridTemplateColumns: '1.4fr 1fr', overflow: 'hidden' }}
         >
-          <DotGrid className="absolute inset-0" style={{ zIndex: 0 }} />
+          <DotGrid
+            className="absolute inset-0"
+            style={{ zIndex: 0 }}
+            dotSize={2}
+            gap={14}
+            proximity={130}
+            shockRadius={240}
+            shockStrength={5}
+            returnDuration={1.5}
+          />
           <FadeUp delay={0.05} style={{ position: 'relative', zIndex: 1 }}>
             <h1 className="font-sans m-0" style={{ fontSize: 'clamp(30px, 4vw, 64px)', lineHeight: 1.1, letterSpacing: '-0.01em', maxWidth: '16ch' }}>
               Bespoke web development, design & creative direction{' '}
@@ -287,11 +296,11 @@ export default async function Home() {
               </p>
               <a
                 href="#selected-work"
-                className="ls-scroll-cta font-mono uppercase inline-flex items-center gap-[10px] text-ls-muted"
+                className="ls-scroll-cta font-sans uppercase inline-flex items-center gap-[10px] text-ls-muted"
                 style={{ marginTop: 28, marginBottom: 12,fontSize: 16, letterSpacing: '0.12em', textDecoration: 'none' }}
               >
                 Explore my work
-                <span className="ls-bounce-arrow">↓</span>
+                <span className="ls-bounce-arrow">↯</span>
               </a>
             </div>
           </FadeUp>
@@ -470,8 +479,8 @@ export default async function Home() {
 
       </main>
 
-      <div style={{ marginTop: 'clamp(56px, 7vw, 96px)' }}>
-        <Footer>website made with ♥ by LS</Footer>
+      <div style={{ marginTop: 'clamp(120px, 16vw, 220px)' }}>
+        <Footer>Built with 🖤 by me</Footer>
       </div>
     </>
   )

@@ -5,11 +5,12 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
     <footer
       className="flex justify-between items-end px-5 sm:px-8 lg:px-14 font-mono"
       style={{
-        paddingTop: 28,
-        paddingBottom: 28,
+        paddingTop: 40,
+        paddingBottom: 40,
         fontSize: 11,
         letterSpacing: '0.04em',
-        color: 'var(--ls-fg-dim)',
+        background: 'var(--ls-accent)',
+        color: 'oklch(0.97 0.010 70)',
       }}
     >
       <span>© Liam Strickland — {SITE.location}</span>
