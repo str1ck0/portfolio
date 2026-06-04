@@ -5,7 +5,7 @@ import { SITE, ABOUT } from '@/lib/content'
 import { getSiteSettings, urlFor } from '@/lib/sanity'
 
 export const metadata = {
-  title: 'About — Liam Strickland',
+  title: 'About',
   description: 'Cape Town-based web developer and designer.',
 }
 
@@ -160,16 +160,45 @@ export default async function AboutPage() {
               ))}
             </div>
 
-            {/* Clients */}
+            {/* Background */}
             <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.14em', marginTop: 48 }}>
-              Clients &amp; collaborators
+              Background
             </p>
-            <p
-              className="font-moonlight text-ls-fg-dim"
-              style={{ fontSize: 15, lineHeight: 1.7, marginTop: 14, maxWidth: '44ch' }}
-            >
-              {ABOUT.clients}
-            </p>
+            <ul style={{ listStyle: 'none', padding: 0, margin: '16px 0 0' }}>
+              {ABOUT.background.map((b, i) => (
+                <li
+                  key={b.role}
+                  className="flex items-baseline justify-between gap-4 border-t border-ls-line-soft"
+                  style={{ padding: '12px 0', borderBottom: i === ABOUT.background.length - 1 ? '1px solid var(--ls-line-soft)' : undefined }}
+                >
+                  <span style={{ fontSize: 15, lineHeight: 1.45 }}>
+                    <span className="font-sans text-ls-fg">{b.role}</span>
+                    <span className="font-moonlight text-ls-fg-dim"> — </span>
+                    {b.orgs.map((o, j) => (
+                      <span key={o.name} className="font-moonlight text-ls-fg-dim">
+                        {j > 0 && ', '}
+                        {o.url ? (
+                          <a
+                            href={o.url}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="ls-hover-link"
+                            style={{ color: 'var(--ls-accent)' }}
+                          >
+                            {o.name}
+                          </a>
+                        ) : (
+                          o.name
+                        )}
+                      </span>
+                    ))}
+                  </span>
+                  <span className="font-mono text-ls-muted flex-shrink-0" style={{ fontSize: 11, letterSpacing: '0.06em' }}>
+                    {b.year}
+                  </span>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
 
@@ -192,14 +221,6 @@ export default async function AboutPage() {
           )}
 
           <div>
-            {/* <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.14em' }}>
-              Colophon
-            </p> */}
-            {/* <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.7, marginTop: 14, maxWidth: '42ch' }}>
-              This site is set in <em style={{ fontStyle: 'italic', color: 'var(--ls-fg)' }}>Basteleur</em> and Geist Mono.
-              Built in Next.js, content in Sanity, hosted on Vercel.
-              The accent is a slightly-off CRT phosphor green.
-            </p> */}
             <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.7, marginTop: 12, maxWidth: '42ch' }}>
               © 2026 Liam Strickland
             </p>

@@ -5,6 +5,7 @@ import { PortableText } from '@portabletext/react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProjectImages from '@/components/ProjectImages'
+import Reveal from '@/components/Reveal'
 import {
   getAllProjects,
   getProjectBySlug,
@@ -26,9 +27,25 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const project = await getProjectBySlug(slug)
   if (!project) return {}
+  const description = project.blurb || project.description
+  const ogImage = project.cover?.asset?.url
+    ? urlFor(project.cover).width(1200).height(630).fit('crop').auto('format').url()
+    : undefined
   return {
-    title: `${project.title} — Liam Strickland`,
-    description: project.blurb || project.description,
+    title: project.title,
+    description,
+    openGraph: {
+      type: 'article',
+      title: project.title,
+      description,
+      ...(ogImage ? { images: [{ url: ogImage, width: 1200, height: 630, alt: project.title }] } : {}),
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: project.title,
+      description,
+      ...(ogImage ? { images: [ogImage] } : {}),
+    },
   }
 }
 
@@ -223,7 +240,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* LEAD IMAGE */}
         {(project.cover?.asset?.url || project.video) && (
-          <div className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 32 }}>
+          <Reveal className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 32 }}>
             {project.video ? (
               <video
                 src={project.video}
@@ -240,17 +257,19 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
                 />
               </div>
             )}
-          </div>
+          </Reveal>
         )}
 
         {/* BODY — new case study format */}
         {hasBody && (
-          <CaseStudyBody project={project} sectionCount={sectionCount} />
+          <Reveal>
+            <CaseStudyBody project={project} sectionCount={sectionCount} />
+          </Reveal>
         )}
 
         {/* Image grid — shown after body if both exist, or standalone for legacy projects */}
         {project.images && project.images.length > 0 && (
-          <div className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 56 }}>
+          <Reveal className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 56 }}>
             {!hasBody && (project.blurb || project.description) ? (
               <p
                 className="font-sans text-ls-fg"
@@ -260,12 +279,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </p>
             ) : null}
             <ProjectImages images={project.images} projectTitle={project.title} />
-          </div>
+          </Reveal>
         )}
 
         {/* NEXT PROJECT */}
         {next && next.slug !== slug && (
-          <div
+          <Reveal
             className="px-5 sm:px-8 lg:px-14 flex justify-between items-end border-t border-ls-line-soft"
             style={{ paddingTop: 96, paddingBottom: 56, marginTop: 96 }}
           >
@@ -286,7 +305,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
             <Link href={`/work/${next.slug}`} className="ls-cta">
               Continue →
             </Link>
-          </div>
+          </Reveal>
         )}
 
       </main>

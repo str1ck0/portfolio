@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import { ThemeProvider } from '@/components/ThemeProvider'
 import PageTransition from '@/components/PageTransition'
+import { SITE } from '@/lib/content'
 import './globals.css'
 
 // Using Geist as default — swap out variable names once you've chosen your typefaces
@@ -22,9 +23,28 @@ const fontMono = localFont({
   weight: '100 900',
 })
 
+const description = 'Independent web development, design & creative direction. Cape Town, remote-first.'
+
 export const metadata: Metadata = {
-  title: 'Liam Strickland',
-  description: 'Creative technologist — design, code, art, writing.',
+  metadataBase: new URL(SITE.url),
+  title: {
+    default: 'Liam Strickland — Independent web dev & design',
+    template: '%s — Liam Strickland',
+  },
+  description,
+  openGraph: {
+    type: 'website',
+    siteName: SITE.name,
+    url: SITE.url,
+    title: 'Liam Strickland — Independent web dev & design',
+    description,
+    locale: 'en_ZA',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'Liam Strickland — Independent web dev & design',
+    description,
+  },
   icons: {
     icon: [{ url: '/favicon.ico' }],
     apple: [{ url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' }],

@@ -62,28 +62,24 @@
   img { display: block; max-width: 100%; }
 }
 
-/* Nav link — expanding underline on hover, full underline when active */
+/* Nav link — turns accent green and lifts slightly on hover / when active */
 .ls-nav-link {
   position: relative;
+  display: inline-block;
   color: var(--ls-fg);
-  transition: color 0.25s;
+  transition: color 0.25s ease, transform 0.25s ease;
+  will-change: transform;
 }
-.ls-nav-link::before {
-  content: '';
-  position: absolute;
-  width: 0;
-  height: 1px;
-  background: currentColor;
-  bottom: -3px;
-  left: 0;
-  transition: width 0.35s ease;
-}
-.ls-nav-link:hover { color: var(--ls-accent); }
-.ls-nav-link:hover::before { width: 100%; }
+.ls-nav-link:hover,
 .ls-nav-link.ls-nav-active {
   color: var(--ls-accent);
+  transform: translateY(-2px);
 }
-.ls-nav-link.ls-nav-active::before { width: 100%; }
+@media (prefers-reduced-motion: reduce) {
+  .ls-nav-link { transition: color 0.25s ease; }
+  .ls-nav-link:hover,
+  .ls-nav-link.ls-nav-active { transform: none; }
+}
 
 /* Marquee ticker */
 @keyframes marquee {
@@ -142,6 +138,43 @@
 .ls-hover-link:hover { color: var(--ls-accent); }
 .ls-hover-link:hover::after { opacity: 1; }
 
+/* Scroll reveal — fade + slide up as blocks enter the viewport */
+.ls-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+              transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.ls-reveal-in {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .ls-reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* Footer email link */
+.ls-footer-link {
+  position: relative;
+  transition: opacity 0.2s ease;
+}
+.ls-footer-link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0;
+  bottom: -2px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 0.3s ease;
+}
+.ls-footer-link:hover::after { transform: scaleX(1); }
+
 /* Case study prose */
 .ls-prose strong { color: var(--ls-fg); font-weight: 500; }
 .ls-prose em { font-style: italic; }
@@ -149,6 +182,19 @@
 @keyframes spin-slow {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
+}
+.ls-spin {
+  animation: spin-slow 12s linear infinite;
+}
+
+/* Respect reduced-motion: pause the continuously-looping animations */
+@media (prefers-reduced-motion: reduce) {
+  .ls-spin,
+  .ls-marquee-track,
+  .ls-bounce-arrow {
+    animation: none !important;
+  }
+  html { scroll-behavior: auto; }
 }
 
 /* Scroll CTA */

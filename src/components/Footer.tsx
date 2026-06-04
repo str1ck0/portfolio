@@ -15,7 +15,9 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
     >
       <span>© Liam Strickland — {SITE.location}</span>
       <span className="flex-1 text-center hidden sm:block">{children}</span>
-      <span className="hidden sm:block">{SITE.email}</span>
+      <a href={`mailto:${SITE.email}`} className="ls-footer-link hidden sm:block">
+        {SITE.email}
+      </a>
     </footer>
   )
 }

@@ -32,7 +32,8 @@ function WavyMenuIcon() {
 
 const NAV_LINKS = [
   { href: '/', label: 'Work', match: (p: string) => p === '/' },
-  { href: '/blog', label: 'Thoughts', match: (p: string) => p.startsWith('/blog') },
+  // Hidden until there are posts to show:
+  // { href: '/blog', label: 'Thoughts', match: (p: string) => p.startsWith('/blog') },
   { href: '/about', label: 'About', match: (p: string) => p === '/about' },
 ]
 
@@ -83,8 +84,7 @@ export default function Header({ showStatus }: { showStatus?: boolean }) {
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className="w-[18px] h-[18px] flex-shrink-0 hover:opacity-50 transition-opacity"
-            style={{ animation: 'spin-slow 12s linear infinite' }}
+            className="ls-spin w-[18px] h-[18px] flex-shrink-0 hover:opacity-50 transition-opacity"
           >
             <YinYang inverted={theme === 'dark'} />
           </button>
@@ -95,8 +95,7 @@ export default function Header({ showStatus }: { showStatus?: boolean }) {
           <button
             onClick={toggle}
             aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
-            className="w-[18px] h-[18px] flex-shrink-0 hover:opacity-50 transition-opacity"
-            style={{ animation: 'spin-slow 12s linear infinite' }}
+            className="ls-spin w-[18px] h-[18px] flex-shrink-0 hover:opacity-50 transition-opacity"
           >
             <YinYang inverted={theme === 'dark'} />
           </button>
