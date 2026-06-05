@@ -432,8 +432,8 @@ export default async function Home() {
         {/* PORTRAIT + SHORT BIO */}
         <FadeUp>
         <div
-          className="px-5 sm:px-8 lg:px-14 flex flex-col-reverse gap-12 sm:grid sm:gap-20 sm:items-center"
-          style={{ paddingTop: 'clamp(64px, 8vw, 120px)', gridTemplateColumns: '320px 1fr' }}
+          className="px-5 sm:px-8 lg:px-14 flex flex-col-reverse gap-12 sm:grid sm:gap-20 sm:items-center mx-auto w-full"
+          style={{ paddingTop: 'clamp(64px, 8vw, 120px)', gridTemplateColumns: '320px 1fr', maxWidth: 1280 }}
         >
           {settings?.homepagePortrait?.asset?.url ? (
             <div style={{ position: 'relative', width: '100%', height: 400 }}>

@@ -70,15 +70,16 @@
   transition: color 0.25s ease, transform 0.25s ease;
   will-change: transform;
 }
-.ls-nav-link:hover,
-.ls-nav-link.ls-nav-active {
+.ls-nav-link:hover {
   color: var(--ls-accent);
   transform: translateY(-2px);
 }
+.ls-nav-link.ls-nav-active {
+  color: var(--ls-accent);
+}
 @media (prefers-reduced-motion: reduce) {
   .ls-nav-link { transition: color 0.25s ease; }
-  .ls-nav-link:hover,
-  .ls-nav-link.ls-nav-active { transform: none; }
+  .ls-nav-link:hover { transform: none; }
 }
 
 /* Marquee ticker */
