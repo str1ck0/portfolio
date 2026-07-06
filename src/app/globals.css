@@ -308,12 +308,15 @@
   margin-left: calc(-1 * var(--cs-pad));
 }
 @media (min-width: 768px) {
+  /* Break out to the right only. Extending left under the lead column caused
+     the images to overlap a tall lead blurb — so wide stays within the prose
+     column and full-bleed reaches only the right viewport edge. */
   .ls-cs-wide {
-    width: calc(100% + var(--cs-aside) + var(--cs-gap));
-    margin-left: calc(-1 * (var(--cs-aside) + var(--cs-gap)));
+    width: 100%;
+    margin-left: 0;
   }
   .ls-cs-fullbleed {
-    width: calc(100% + var(--cs-aside) + var(--cs-gap) + 2 * var(--cs-pad));
-    margin-left: calc(-1 * (var(--cs-aside) + var(--cs-gap) + var(--cs-pad)));
+    width: calc(100% + var(--cs-pad));
+    margin-left: 0;
   }
 }
