@@ -236,6 +236,35 @@ export default defineType({
       options: { accept: 'video/mp4,video/webm' },
     }),
     defineField({
+      name: 'videoPoster',
+      title: 'Video Poster',
+      type: 'image',
+      options: { hotspot: true },
+      description: 'First-frame image shown before the demo video plays (and used as the grid thumbnail).',
+      fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+    }),
+    defineField({
+      name: 'browserFrame',
+      title: 'Browser Frame',
+      type: 'object',
+      description: 'Wrap the lead media in a browser window (traffic lights + address bar).',
+      options: { collapsible: true, collapsed: true },
+      fields: [
+        {
+          name: 'enabled',
+          title: 'Show browser frame',
+          type: 'boolean',
+          initialValue: false,
+        },
+        {
+          name: 'url',
+          title: 'Address bar URL',
+          type: 'string',
+          description: 'e.g. motherlode-landing.vercel.app — falls back to the first live link if left blank.',
+        },
+      ],
+    }),
+    defineField({
       name: 'technologies',
       title: 'Technologies',
       type: 'array',

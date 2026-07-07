@@ -49,7 +49,7 @@ const imageFields = `
 
 // Homepage: selected work index
 export const indexProjectsQuery = `
-  *[_type == "project" && !(display in ["archive", "hidden"])] | order(order asc) [0...6] {
+  *[_type == "project" && !(display in ["archive", "hidden"])] | order(order asc) [0...10] {
     _id,
     title,
     "slug": slug.current,
@@ -124,6 +124,8 @@ export const projectBySlugQuery = `
     year,
     links,
     "video": video.asset->url,
+    "videoPoster": videoPoster.asset->url,
+    browserFrame,
     "cover": coalesce(cover, images[0]) { ${imageFields} },
     "body": body[] {
       ...,
@@ -326,6 +328,8 @@ export interface ProjectDetail {
   technologies?: string[]
   year?: number
   video?: string
+  videoPoster?: string
+  browserFrame?: { enabled?: boolean; url?: string }
   cover?: SanityImage
   body?: CaseStudyBlock[]
   fullDescription?: unknown[]

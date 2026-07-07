@@ -23,6 +23,7 @@ export const ABOUT: {
     { label: 'Instagram', url: 'https://www.instagram.com/liam_stricko/' },
     { label: 'studio pilz', url: 'https://www.studiopilz.art/' },
     { label: 'GitHub', url: 'https://github.com/str1ck0' },
+    { label: 'LinkedIn', url: 'https://www.linkedin.com/in/liamstrickland/' },
   ],
   background: [
     {

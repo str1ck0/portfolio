@@ -288,7 +288,7 @@ export default async function Home() {
           <FadeUp delay={0.15} style={{ position: 'relative', zIndex: 1 }}>
             <div>
               <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-                📍 Cape Town · Remote first · Freelance
+                Cape Town · Remote first · Freelance
               </p>
               <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.55, margin: '12px 0 0', maxWidth: '42ch' }}>
                 Considered websites and design direction for creatives, studios and independent brands.{' '}
@@ -300,7 +300,7 @@ export default async function Home() {
                 style={{ marginTop: 28, marginBottom: 12,fontSize: 16, letterSpacing: '0.12em', textDecoration: 'none' }}
               >
                 Explore my work
-                <span className="ls-bounce-arrow">↯</span>
+                <span className="ls-bounce-arrow">↓</span>
               </a>
             </div>
           </FadeUp>

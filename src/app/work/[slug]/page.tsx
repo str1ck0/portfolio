@@ -5,6 +5,7 @@ import { PortableText } from '@portabletext/react'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import ProjectImages from '@/components/ProjectImages'
+import BrowserFrame from '@/components/BrowserFrame'
 import Reveal from '@/components/Reveal'
 import {
   getAllProjects,
@@ -238,27 +239,38 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </div>
         </div>
 
-        {/* LEAD IMAGE */}
-        {(project.cover?.asset?.url || project.video) && (
-          <Reveal className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 32 }}>
-            {project.video ? (
-              <video
-                src={project.video}
-                autoPlay muted loop playsInline
-                className="w-full h-auto"
-                style={{ aspectRatio: '16/8', objectFit: 'cover' }}
+        {/* LEAD MEDIA — video or cover, optionally in a browser frame */}
+        {(project.cover?.asset?.url || project.video) && (() => {
+          const media = project.video ? (
+            <video
+              src={project.video}
+              poster={project.videoPoster}
+              autoPlay muted loop playsInline
+              className="w-full h-auto"
+              style={{ aspectRatio: '16/8', objectFit: 'cover' }}
+            />
+          ) : project.cover?.asset?.url ? (
+            <div style={{ aspectRatio: '16/8', overflow: 'hidden' }}>
+              <SanityImg
+                img={project.cover}
+                className="w-full h-full object-cover"
+                priority
               />
-            ) : project.cover?.asset?.url && (
-              <div style={{ aspectRatio: '16/8', overflow: 'hidden' }}>
-                <SanityImg
-                  img={project.cover}
-                  className="w-full h-full object-cover"
-                  priority
-                />
-              </div>
-            )}
-          </Reveal>
-        )}
+            </div>
+          ) : null
+
+          const frameUrl = project.browserFrame?.url || project.links?.[0]?.url
+
+          return (
+            <Reveal className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 32 }}>
+              {project.browserFrame?.enabled ? (
+                <BrowserFrame url={frameUrl}>{media}</BrowserFrame>
+              ) : (
+                media
+              )}
+            </Reveal>
+          )
+        })()}
 
         {/* BODY — new case study format */}
         {hasBody && (

@@ -229,7 +229,7 @@ export default async function AboutPage() {
 
       </main>
 
-      <Footer>↗ last updated · May 2026</Footer>
+      <Footer></Footer>
     </>
   )
 }
