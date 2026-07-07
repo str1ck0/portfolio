@@ -55,7 +55,7 @@ async function main() {
       asset: { _type: 'reference', _ref: posterAsset._id },
       alt: 'Motherlode — glowing green orb on a matrix background',
     },
-    browserFrame: { enabled: true, url: 'motherlode-landing.vercel.app' },
+    browserFrame: { enabled: true, url: 'motherlode.crypto' },
     links: [
       { _key: 'live', _type: 'object', title: 'Live site', url: 'https://motherlode-landing.vercel.app' },
     ],

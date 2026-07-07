@@ -246,8 +246,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               src={project.video}
               poster={project.videoPoster}
               autoPlay muted loop playsInline
-              className="w-full h-auto"
-              style={{ aspectRatio: '16/8', objectFit: 'cover' }}
+              className="w-full h-auto block"
             />
           ) : project.cover?.asset?.url ? (
             <div style={{ aspectRatio: '16/8', overflow: 'hidden' }}>
