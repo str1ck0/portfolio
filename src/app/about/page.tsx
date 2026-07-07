@@ -18,6 +18,8 @@ function PortraitSlot() {
         aspectRatio: '4/5',
         position: 'relative',
         overflow: 'hidden',
+        maxWidth: 300,
+        width: '100%',
         backgroundColor: 'oklch(0.22 0.02 60)',
         backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 6px, rgba(255,255,255,0.025) 6px 12px)',
         border: '1px solid var(--ls-line-soft)',
@@ -57,19 +59,17 @@ export default async function AboutPage() {
             About me & my work
           </p>
           <h1
-            className="font-sans text-ls-fg m-0"
+            className="font-sans text-ls-fg m-0 max-w-[24ch] lg:max-w-[66%]"
             style={{
-              fontSize: 'clamp(40px, 6vw, 72px)',
-              lineHeight: 1.04,
+              fontSize: 'clamp(40px, 3vw, 72px)',
+              lineHeight: 1.2,
               letterSpacing: '-0.01em',
-              maxWidth: '18ch',
               marginTop: 16,
             }}
           >
-            A small practice for{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>the web</em>{' '}
-            and things that exist in{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>physical space.</em>
+            I&apos;m an independent{' '}
+            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>web developer and designer</em>, building with AI and exploring the{' '}
+            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>creative possibilities</em>{' '}of technology.
           </h1>
         </div>
 
@@ -208,7 +208,7 @@ export default async function AboutPage() {
           style={{ paddingTop: 32, paddingBottom: 64, gridTemplateColumns: '1fr 1fr', gap: 56 }}
         >
           {settings?.aboutPortrait?.asset?.url ? (
-            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden' }}>
+            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%' }}>
               <Image
                 src={urlFor(settings.aboutPortrait).width(1200).quality(88).auto('format').url()}
                 alt={settings.aboutPortrait.alt || 'Liam Strickland'}
