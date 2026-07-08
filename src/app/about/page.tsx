@@ -241,11 +241,6 @@ export default async function AboutPage() {
             <PortraitSlot />
           )}
 
-          <div>
-            <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.7, marginTop: 12, maxWidth: '42ch' }}>
-              © 2026 Liam Strickland
-            </p>
-          </div>
         </div>
 
       </main>

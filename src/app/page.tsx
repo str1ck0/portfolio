@@ -480,7 +480,7 @@ export default async function Home() {
       </main>
 
       <div style={{ marginTop: 'clamp(120px, 16vw, 220px)' }}>
-        <Footer>Built with 🖤 by me</Footer>
+        <Footer />
       </div>
     </>
   )

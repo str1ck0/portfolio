@@ -13,7 +13,7 @@ export default function Footer({ children }: { children?: React.ReactNode }) {
         color: 'oklch(0.97 0.010 70)',
       }}
     >
-      <span>© Liam Strickland — {SITE.location}</span>
+      <span>© 2026 Liam Strickland</span>
       <span className="flex-1 text-center hidden sm:block">{children}</span>
       <a href={`mailto:${SITE.email}`} className="ls-footer-link hidden sm:block">
         {SITE.email}
