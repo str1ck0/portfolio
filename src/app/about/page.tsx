@@ -81,10 +81,31 @@ export default async function AboutPage() {
           {/* Left: bio + CTAs */}
           <div>
             <p className="font-moonlight text-ls-fg m-0" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch' }}>
-              I&apos;m a Cape Town-based creative technologist — I build websites, direct design, and make things that exist in physical space.
+              As a solo full stack developer, I leverage AI and my background in design & communications to build outstanding user experiences for the web,
+              mobile and the installation space. I like solving tough creative problems and stand behind what I ship.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
-              On the web side I design and develop for artists, studios, and independent brands: considered interfaces, clean code, built to last. Before going independent I spent two years as a frontend instructor at Le Wagon, teaching web development fundamentals and guiding student projects through to production.
+              I design and develop online presence for small businesses, artists, studios, and independent brands: considered interfaces, clean code, built to last.
+              Before this, I worked on web and mobile apps at{' '}
+              <a
+                href="https://www.wearefullstack.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans"
+                style={{ fontStyle: 'italic', color: 'var(--ls-accent)' }}
+              >
+                Full Stack
+              </a>{' '}
+              and taught by building at{' '}
+              <a
+                href="https://www.lewagon.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-sans"
+                style={{ fontStyle: 'italic', color: 'var(--ls-accent)' }}
+              >
+                Le Wagon
+              </a>.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
               Away from screens I co-run{' '}
@@ -95,9 +116,9 @@ export default async function AboutPage() {
                 className="font-sans"
                 style={{ fontStyle: 'italic', color: 'var(--ls-accent)' }}
               >
-                studio pilz
+                Studio Pilz
               </a>{' '}
-              with my partner Liz — an ongoing project in CRT and generative media installation, working with obsolete technology, live audiovisual systems, and spaces that feel slightly out of time.
+              with my partner Liz — an ongoing project exploring generative code art, media installation, working with obsolete technology, live audiovisual systems, and spaces that feel slightly out of time.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22, fontWeight: 500 }}>
               Open to web development, design direction, and creative technology projects.
