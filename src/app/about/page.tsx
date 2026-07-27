@@ -68,7 +68,7 @@ export default async function AboutPage() {
             }}
           >
             I&apos;m an independent{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>web developer and designer</em>, building with AI and exploring the{' '}
+            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>full-stack web developer and designer</em>, building with AI and exploring the{' '}
             <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>creative possibilities</em>{' '}of technology.
           </h1>
         </div>
@@ -81,8 +81,8 @@ export default async function AboutPage() {
           {/* Left: bio + CTAs */}
           <div>
             <p className="font-moonlight text-ls-fg m-0" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch' }}>
-              As a solo full stack developer, I leverage AI and my background in design & communications to build outstanding user experiences for the web,
-              mobile and the installation space. I like solving tough creative problems and stand behind what I ship.
+              As a solo full-stack developer, I leverage AI and my background in design &amp; communications to build outstanding user experiences for the web and mobile.
+              I like solving tough problems, sweating the details, and standing behind what I ship.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
               I design and develop online presence for small businesses, artists, studios, and independent brands: considered interfaces, clean code, built to last.
@@ -108,20 +108,19 @@ export default async function AboutPage() {
               </a>.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
-              Away from screens I co-run{' '}
+              I also design and build for{' '}
               <a
-                href="https://studiopilz.net"
+                href="https://www.studiopilz.art/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="font-sans"
                 style={{ fontStyle: 'italic', color: 'var(--ls-accent)' }}
               >
                 Studio Pilz
-              </a>{' '}
-              with my partner Liz — an ongoing project exploring generative code art, media installation, working with obsolete technology, live audiovisual systems, and spaces that feel slightly out of time.
+              </a>, an independent creative studio I run with my partner Liz — a space to push new web tools and experiment beyond client work.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22, fontWeight: 500 }}>
-              Open to web development, design direction, and creative technology projects.
+              Open to full-stack web development and design projects — freelance or contract, remote worldwide.
             </p>
 
             {/* CTAs */}

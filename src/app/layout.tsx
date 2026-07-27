@@ -23,12 +23,12 @@ const fontMono = localFont({
   weight: '100 900',
 })
 
-const description = 'Independent web development, design & creative direction. Cape Town, remote-first.'
+const description = 'Freelance full-stack web developer and designer. Fast, considered websites and web apps, designed and built end to end — AI-native, remote-first from Cape Town.'
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE.url),
   title: {
-    default: 'Liam Strickland — Independent web dev & design',
+    default: 'Liam Strickland — Full-stack web developer & designer',
     template: '%s — Liam Strickland',
   },
   description,
@@ -36,13 +36,13 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: SITE.name,
     url: SITE.url,
-    title: 'Liam Strickland — Independent web dev & design',
+    title: 'Liam Strickland — Full-stack web developer & designer',
     description,
     locale: 'en_ZA',
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Liam Strickland — Independent web dev & design',
+    title: 'Liam Strickland — Full-stack web developer & designer',
     description,
   },
   icons: {

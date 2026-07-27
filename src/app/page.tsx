@@ -3,7 +3,7 @@ import Link from 'next/link'
 import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FadeUp from '@/components/FadeUp'
-import DotGrid from '@/components/DotGrid'
+import DeferredDotGrid from '@/components/DeferredDotGrid'
 import {
   getIndexProjects,
   getArchiveProjects,
@@ -231,18 +231,18 @@ function ArchiveRow({ item }: { item: ArchiveProject }) {
 
 const marqueeItems = [
   'full-stack web development',
-  'graphic design',
-  'creative direction',
-  'event production',
+  'web & product design',
+  'ai-native builds',
+  'from concept to launch',
   'full-stack web development',
-  'graphic design',
-  'creative direction',
-  'event production',
+  'web & product design',
+  'ai-native builds',
+  'from concept to launch',
 ]
 
 const marqueeColors = {
   background: 'oklch(0.48 0.08 142)',
-  text: '',
+  text: 'oklch(0.96 0.01 85)',
   separator: 'inherit',
 }
 
@@ -269,7 +269,7 @@ export default async function Home() {
           className="relative px-5 sm:px-8 lg:px-14 flex flex-col gap-8 lg:grid lg:gap-20 lg:items-end"
           style={{ paddingTop: 'clamp(80px, 10vw, 140px)', paddingBottom: 'clamp(80px, 10vw, 140px)', gridTemplateColumns: '1.4fr 1fr', overflow: 'hidden' }}
         >
-          <DotGrid
+          <DeferredDotGrid
             className="absolute inset-0"
             style={{ zIndex: 0 }}
             dotSize={2}
@@ -279,31 +279,30 @@ export default async function Home() {
             shockStrength={5}
             returnDuration={1.5}
           />
-          <FadeUp delay={0.05} style={{ position: 'relative', zIndex: 1 }}>
-            <h1 className="font-sans m-0" style={{ fontSize: 'clamp(30px, 4vw, 64px)', lineHeight: 1.1, letterSpacing: '-0.01em', maxWidth: '16ch' }}>
-              Bespoke web development, design & creative direction{' '}
-              {/* <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>spaces out of time</em>. */}
+          <div style={{ position: 'relative', zIndex: 1 }}>
+            <h1 className="font-sans m-0" style={{ fontSize: 'clamp(30px, 4vw, 64px)', lineHeight: 1.1, letterSpacing: '-0.01em', maxWidth: '18ch' }}>
+              Fast, considered websites and web apps —{' '}
+              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>designed and built end to end</em>.
             </h1>
-          </FadeUp>
-          <FadeUp delay={0.15} style={{ position: 'relative', zIndex: 1 }}>
+          </div>
+          <div style={{ position: 'relative', zIndex: 1 }}>
             <div>
               <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
                 Cape Town · Remote first · Freelance
               </p>
-              <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.55, margin: '12px 0 0', maxWidth: '42ch' }}>
-                Considered websites and design direction for creatives, studios and independent brands.{' '}
-                {/* <span className="text-ls-fg">studio pilz</span>. */}
+              <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.55, margin: '12px 0 0', maxWidth: '44ch' }}>
+                Full-stack developer and designer, partnering with studios, brands and founders to ship polished, AI-native products — from first pixel to production.
               </p>
               <a
                 href="#selected-work"
-                className="ls-scroll-cta font-sans uppercase inline-flex items-center gap-[10px] text-ls-muted"
+                className="ls-scroll-cta font-sans uppercase inline-flex items-center gap-[10px] text-ls-fg-dim"
                 style={{ marginTop: 28, marginBottom: 12,fontSize: 16, letterSpacing: '0.12em', textDecoration: 'none' }}
               >
                 Explore my work
                 <span className="ls-bounce-arrow">↓</span>
               </a>
             </div>
-          </FadeUp>
+          </div>
         </div>
 
         {/* PROJECT INDEX */}
@@ -457,9 +456,9 @@ export default async function Home() {
             >
               I&apos;m a freelance{' '}
               <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>
-                web developer, graphic designer and artist
+                full-stack web developer and designer
               </em>{' '}
-              working across screens and ephemeral spaces.
+              building fast, modern products for the web — increasingly with AI in the loop.
             </p>
             <div className="flex flex-wrap gap-[14px]" style={{ marginTop: 36 }}>
               <a href="mailto:hello@liamstrickland.dev" className="ls-cta font-moonlight">

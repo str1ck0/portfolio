@@ -65,7 +65,7 @@ export default function Header({ showStatus }: { showStatus?: boolean }) {
               className="hidden lg:inline font-mono uppercase"
               style={{ fontSize: 11, letterSpacing: '0.08em', color: 'var(--ls-muted)', marginLeft: 14 }}
             >
-              Independent web dev & design
+              Full-stack web developer & designer
             </span>
           )}
         </div>

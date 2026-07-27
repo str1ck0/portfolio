@@ -1,6 +1,6 @@
 import { ImageResponse } from 'next/og'
 
-export const alt = 'Liam Strickland — Independent web dev & design'
+export const alt = 'Liam Strickland — Full-stack web developer & designer'
 export const size = { width: 1200, height: 630 }
 export const contentType = 'image/png'
 
@@ -28,7 +28,7 @@ export default function OpengraphImage() {
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
           <div style={{ width: 14, height: 14, borderRadius: 999, background: accent }} />
           <div style={{ color: dim, fontSize: 26, letterSpacing: 4, textTransform: 'uppercase' }}>
-            Independent web dev &amp; design
+            Full-stack web developer &amp; designer
           </div>
         </div>
 
@@ -37,7 +37,7 @@ export default function OpengraphImage() {
             Liam Strickland
           </div>
           <div style={{ color: dim, fontSize: 34, maxWidth: 820, lineHeight: 1.3 }}>
-            Bespoke web development, design &amp; creative direction.
+            Fast, considered websites and web apps — designed and built end to end.
           </div>
         </div>
 

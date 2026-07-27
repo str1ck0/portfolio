@@ -15,9 +15,9 @@ export const ABOUT: {
   background: BgEntry[]
 } = {
   disciplines: [
-    'Web Development',
-    'Graphic Design',
-    'Creative Direction',
+    'Full-Stack Development',
+    'Web & UI Design',
+    'AI Integration',
   ],
   social: [
     { label: 'Instagram', url: 'https://www.instagram.com/liam_stricko/' },
@@ -26,14 +26,6 @@ export const ABOUT: {
     { label: 'LinkedIn', url: 'https://www.linkedin.com/in/liamstrickland/' },
   ],
   background: [
-    {
-      role: 'Artist',
-      year: '2025',
-      orgs: [
-        { name: 'Boom Festival' },
-        { name: 'Daniel Popper Team', url: 'https://danielpopper.com/' },
-      ],
-    },
     {
       role: 'Frontend Developer',
       year: '2025',

@@ -143,8 +143,8 @@ function MetaRow({ label, value }: { label: string; value?: string }) {
       className="flex justify-between gap-3 font-mono"
       style={{ padding: '6px 0', borderBottom: '1px dashed var(--ls-line-soft)', fontSize: 11 }}
     >
-      <span className="uppercase text-ls-muted" style={{ letterSpacing: '0.1em' }}>{label}</span>
-      <span className="text-ls-fg">{value}</span>
+      <span className="uppercase text-ls-muted shrink-0" style={{ letterSpacing: '0.1em' }}>{label}</span>
+      <span className="text-ls-fg text-right">{value}</span>
     </div>
   )
 }

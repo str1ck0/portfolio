@@ -50,21 +50,7 @@ function throttle<A extends unknown[]>(func: (...args: A) => void, limit: number
   }
 }
 
-export default function DotGrid({
-  dotSize = 2,
-  gap = 14,
-  baseColor,
-  activeColor,
-  proximity = 130,
-  speedTrigger = 100,
-  shockRadius = 240,
-  shockStrength = 5,
-  maxSpeed = 5000,
-  resistance = 750,
-  returnDuration = 1.5,
-  className,
-  style,
-}: {
+export type DotGridProps = {
   dotSize?: number
   gap?: number
   /** override theme colour (hex). Falls back to a theme-aware default. */
@@ -79,7 +65,23 @@ export default function DotGrid({
   returnDuration?: number
   className?: string
   style?: React.CSSProperties
-}) {
+}
+
+export default function DotGrid({
+  dotSize = 2,
+  gap = 14,
+  baseColor,
+  activeColor,
+  proximity = 130,
+  speedTrigger = 100,
+  shockRadius = 240,
+  shockStrength = 5,
+  maxSpeed = 5000,
+  resistance = 750,
+  returnDuration = 1.5,
+  className,
+  style,
+}: DotGridProps) {
   const wrapperRef = useRef<HTMLDivElement>(null)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const dotsRef = useRef<Dot[]>([])

@@ -9,7 +9,7 @@
     --ls-bg-elev: oklch(0.93 0.010 70);
     --ls-fg: oklch(0.18 0.008 70);
     --ls-fg-dim: oklch(0.42 0.008 70);
-    --ls-muted: oklch(0.58 0.008 70);
+    --ls-muted: oklch(0.50 0.008 70);
     --ls-line: oklch(0.72 0.008 70);
     --ls-line-soft: oklch(0.85 0.008 70);
     --ls-accent: oklch(0.48 0.08 142);
@@ -30,7 +30,7 @@
     --ls-bg-elev: oklch(0.20 0.008 70);
     --ls-fg: oklch(0.94 0.008 80);
     --ls-fg-dim: oklch(0.72 0.008 80);
-    --ls-muted: oklch(0.50 0.008 70);
+    --ls-muted: oklch(0.60 0.008 70);
     --ls-line: oklch(0.30 0.008 70);
     --ls-line-soft: oklch(0.24 0.008 70);
     --ls-accent: oklch(0.48 0.08 142);
