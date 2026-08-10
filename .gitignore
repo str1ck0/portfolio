@@ -43,3 +43,6 @@ next-env.d.ts
 /.sanity
 /dist
 implementation_plan.md.resolved
+
+# claude code local settings (machine-local)
+.claude/settings.local.json
