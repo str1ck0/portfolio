@@ -5,16 +5,16 @@ import PageTransition from '@/components/PageTransition'
 import { SITE } from '@/lib/content'
 import './globals.css'
 
-// Using Geist as default — swap out variable names once you've chosen your typefaces
+// Roobert, built from the variable original with the MONO axis pinned to 0 and
+// ital pinned per file — keeps the full 300–900 weight range at ~125 KB each.
 const fontSans = localFont({
-  src: './fonts/Basteleur-Bold.woff2',
+  src: [
+    { path: './fonts/Roobert-Upright.woff2', weight: '300 900', style: 'normal' },
+    { path: './fonts/Roobert-Italic.woff2', weight: '300 900', style: 'italic' },
+  ],
   variable: '--font-sans',
-  weight: '100 900',
-})
-
-const fontMoonlight = localFont({
-  src: './fonts/Basteleur-Moonlight.woff2',
-  variable: '--font-moonlight',
+  display: 'swap',
+  fallback: ['Helvetica Neue', 'Helvetica', 'Arial', 'sans-serif'],
 })
 
 const fontMono = localFont({
@@ -54,7 +54,7 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={`${fontSans.variable} ${fontMoonlight.variable} ${fontMono.variable} font-sans`}>
+      <body className={`${fontSans.variable} ${fontMono.variable} font-sans`}>
         <ThemeProvider>
           <PageTransition>
             {children}

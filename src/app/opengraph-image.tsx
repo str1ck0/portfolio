@@ -6,10 +6,10 @@ export const contentType = 'image/png'
 
 // Branded default OG image, used for any route without its own image.
 export default function OpengraphImage() {
-  const bg = '#1b1a17'
-  const fg = '#f0ede2'
-  const dim = '#9a978c'
-  const accent = '#5a9e6a'
+  const bg = '#080b0f'
+  const fg = '#eff0f1'
+  const dim = '#8899aa'
+  const accent = '#39bba5'
 
   return new ImageResponse(
     (
@@ -22,7 +22,7 @@ export default function OpengraphImage() {
           justifyContent: 'space-between',
           background: bg,
           padding: '72px 80px',
-          fontFamily: 'sans-serif',
+          fontFamily: 'Helvetica, Arial, sans-serif',
         }}
       >
         <div style={{ display: 'flex', alignItems: 'center', gap: 16 }}>
@@ -33,16 +33,16 @@ export default function OpengraphImage() {
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', gap: 18 }}>
-          <div style={{ color: fg, fontSize: 96, fontWeight: 700, lineHeight: 1.05 }}>
+          <div style={{ color: fg, fontSize: 96, fontWeight: 700, lineHeight: 1.05, letterSpacing: '-0.025em' }}>
             Liam Strickland
           </div>
-          <div style={{ color: dim, fontSize: 34, maxWidth: 820, lineHeight: 1.3 }}>
-            Fast, considered websites and web apps — designed and built end to end.
+          <div style={{ color: dim, fontSize: 34, maxWidth: 860, lineHeight: 1.3 }}>
+            I design and build web products end to end — and ship them fast.
           </div>
         </div>
 
         <div style={{ display: 'flex', justifyContent: 'space-between', color: dim, fontSize: 24 }}>
-          <span>Cape Town · Remote-first</span>
+          <span>Cape Town · Remote-first · Open to roles</span>
           <span style={{ color: accent }}>liamstrickland.dev</span>
         </div>
       </div>

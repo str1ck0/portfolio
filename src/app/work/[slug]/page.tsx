@@ -14,7 +14,6 @@ import {
   urlFor,
   type ProjectDetail,
   type SanityImage,
-  type CaseStudyBlock,
 } from '@/lib/sanity'
 
 export const revalidate = 60

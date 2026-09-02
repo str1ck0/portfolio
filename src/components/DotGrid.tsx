@@ -29,8 +29,8 @@ type Rgb = { r: number; g: number; b: number }
 
 // theme palettes (hex), tuned to the --ls tokens
 const THEME = {
-  dark: { base: '#3c3e3a', active: '#529668' },
-  light: { base: '#c4c0b4', active: '#468058' },
+  dark: { base: '#212832', active: '#39bba5' },
+  light: { base: '#e0e4ea', active: '#007e6a' },
 }
 
 function hexToRgb(hex: string): Rgb {

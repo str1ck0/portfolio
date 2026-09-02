@@ -3,16 +3,16 @@
 @tailwind utilities;
 
 @layer base {
-  /* Light theme — warm off-white cream (default) */
+  /* Light theme — near-white with blue-black ink (default) */
   :root {
-    --ls-bg: oklch(0.97 0.010 70);
-    --ls-bg-elev: oklch(0.93 0.010 70);
-    --ls-fg: oklch(0.18 0.008 70);
-    --ls-fg-dim: oklch(0.42 0.008 70);
-    --ls-muted: oklch(0.50 0.008 70);
-    --ls-line: oklch(0.72 0.008 70);
-    --ls-line-soft: oklch(0.85 0.008 70);
-    --ls-accent: oklch(0.48 0.08 142);
+    --ls-bg: oklch(0.980 0.003 250);
+    --ls-bg-elev: oklch(0.945 0.005 250);
+    --ls-fg: oklch(0.175 0.014 254);
+    --ls-fg-dim: oklch(0.400 0.020 254);
+    --ls-muted: oklch(0.520 0.024 251);
+    --ls-line: oklch(0.760 0.012 251);
+    --ls-line-soft: oklch(0.890 0.008 251);
+    --ls-accent: oklch(52% 0.11563 179.085);
     --ls-marquee-text: var(--ls-bg);
 
     /* Backward-compat aliases — used by blog pages */
@@ -24,17 +24,17 @@
     --hover-bg: var(--ls-bg-elev);
   }
 
-  /* Dark theme */
+  /* Dark theme — blue-black ground, light grey-white ink */
   .dark {
-    --ls-bg: oklch(0.16 0.008 70);
-    --ls-bg-elev: oklch(0.20 0.008 70);
-    --ls-fg: oklch(0.94 0.008 80);
-    --ls-fg-dim: oklch(0.72 0.008 80);
-    --ls-muted: oklch(0.60 0.008 70);
-    --ls-line: oklch(0.30 0.008 70);
-    --ls-line-soft: oklch(0.24 0.008 70);
-    --ls-accent: oklch(0.48 0.08 142);
-    --ls-marquee-text: var(--ls-fg);
+    --ls-bg: oklch(0.148 0.010 255);
+    --ls-bg-elev: oklch(0.190 0.012 254);
+    --ls-fg: oklch(0.955 0.002 255);
+    --ls-fg-dim: oklch(0.800 0.016 252);
+    --ls-muted: oklch(0.675 0.032 248);
+    --ls-line: oklch(0.330 0.016 252);
+    --ls-line-soft: oklch(0.250 0.014 253);
+    --ls-accent: oklch(71.688% 0.11563 179.085);
+    --ls-marquee-text: var(--ls-bg);
   }
 
   html {
@@ -44,12 +44,23 @@
   }
 
   body {
+    /* Kept as its own token so it can be pointed at a display face later;
+       for now it tracks the primary. Declared here, not on :root, so it
+       resolves against the next/font value set on <body>. */
+    --font-moonlight: var(--font-sans);
+
     background: var(--ls-bg);
     color: var(--ls-fg);
     font-family: var(--font-sans), 'Helvetica Neue', Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     transition: background 0.3s ease, color 0.3s ease;
+  }
+
+  /* Roobert's default weight is light, so headings state their own. */
+  h1, h2, h3, h4 {
+    font-weight: 700;
+    letter-spacing: -0.025em;
   }
 
   ::selection {
@@ -62,7 +73,7 @@
   img { display: block; max-width: 100%; }
 }
 
-/* Nav link — turns accent green and lifts slightly on hover / when active */
+/* Nav link — turns accent and lifts slightly on hover / when active */
 .ls-nav-link {
   position: relative;
   display: inline-block;
@@ -174,6 +185,7 @@
   transform-origin: left;
   transition: transform 0.3s ease;
 }
+.ls-footer-link:hover { color: var(--ls-accent); }
 .ls-footer-link:hover::after { transform: scaleX(1); }
 
 /* Case study prose */
@@ -191,28 +203,26 @@
 /* Respect reduced-motion: pause the continuously-looping animations */
 @media (prefers-reduced-motion: reduce) {
   .ls-spin,
-  .ls-marquee-track,
-  .ls-bounce-arrow {
+  .ls-marquee-track {
     animation: none !important;
   }
   html { scroll-behavior: auto; }
 }
 
-/* Scroll CTA */
-.ls-scroll-cta {
-  transition: color 0.25s;
+/* Hero scroll CTA — sits on the dot grid, so it needs its own solid ground
+   to stay legible. Arrow moves on hover only, never on an idle loop. */
+.ls-cta-scroll {
+  background: var(--ls-bg);
 }
-.ls-scroll-cta:hover {
-  color: var(--ls-accent);
+.ls-cta-arrow {
+  transition: transform 0.25s ease;
 }
-.ls-bounce-arrow {
-  display: inline-block;
-  animation: bounce-y 1.8s ease-in-out infinite;
-  font-size: 1.4em;
+.ls-cta-scroll:hover .ls-cta-arrow {
+  transform: translateY(3px);
 }
-@keyframes bounce-y {
-  0%, 100% { transform: translateY(0); }
-  50%       { transform: translateY(4px); }
+@media (prefers-reduced-motion: reduce) {
+  .ls-cta-arrow { transition: none; }
+  .ls-cta-scroll:hover .ls-cta-arrow { transform: none; }
 }
 
 /* Project row — 3-col on mobile, 5-col on md+ */
