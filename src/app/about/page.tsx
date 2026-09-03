@@ -23,7 +23,7 @@ function PortraitSlot() {
         backgroundColor: 'var(--ls-bg-elev)',
         backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 6px, rgba(255,255,255,0.025) 6px 12px)',
         border: '1px solid var(--ls-line-soft)',
-        borderRadius: 10,
+        borderRadius: 6,
       }}
     >
       <span
@@ -127,14 +127,15 @@ export default async function AboutPage() {
             {/* CTAs */}
             <div className="flex flex-wrap gap-[14px]" style={{ marginTop: 36 }}>
               <a href={`mailto:${SITE.email}`} className="ls-cta">
-                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="ls-cta-icon">
                   <rect x="0.5" y="0.5" width="14" height="11" rx="1.5" stroke="currentColor"/>
                   <path d="M1 1.5L7.5 7L14 1.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 {SITE.email}
               </a>
               <a href={SITE.bookingUrl} target="_blank" rel="noopener noreferrer" className="ls-cta font-moonlight">
-                Book a call ↗
+                Book a call
+                <span aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -149,11 +150,11 @@ export default async function AboutPage() {
               {ABOUT.disciplines.map((disc, i) => (
                 <li
                   key={disc}
-                  className="flex items-baseline gap-[14px] border-t border-ls-line-soft"
+                  className="flex items-center gap-[14px] border-t border-ls-line-soft"
                   style={{ padding: '12px 0', borderBottom: i === ABOUT.disciplines.length - 1 ? '1px solid var(--ls-line-soft)' : undefined }}
                 >
-                  <span className="font-mono text-ls-muted flex-shrink-0" style={{ fontSize: 11, letterSpacing: '0.06em' }}>
-                    {String(i + 1).padStart(2, '0')}
+                  <span className="ls-index-num font-mono text-ls-muted flex-shrink-0" style={{ fontSize: 11, letterSpacing: '0.06em' }}>
+                    {i + 1}
                   </span>
                   <span className="text-ls-fg">{disc}</span>
                 </li>
@@ -229,7 +230,7 @@ export default async function AboutPage() {
           style={{ paddingTop: 32, paddingBottom: 64, gridTemplateColumns: '1fr 1fr', gap: 56 }}
         >
           {settings?.aboutPortrait?.asset?.url ? (
-            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%', borderRadius: 10, border: '1px solid var(--ls-line-soft)' }}>
+            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
               <Image
                 src={urlFor(settings.aboutPortrait).width(1200).quality(88).auto('format').url()}
                 alt={settings.aboutPortrait.alt || 'Liam Strickland'}

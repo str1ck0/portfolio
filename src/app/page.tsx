@@ -63,13 +63,10 @@ function Slot({ label, tone = 'default', className, style }: {
 
 // ─── Project index row ──────────────────────────────────────────────────────
 
-function ProjectRow({ project, n, total }: {
+function ProjectRow({ project, n }: {
   project: IndexProject
   n: number
-  total: number
 }) {
-  const num = String(n).padStart(2, '0')
-  const tot = String(total).padStart(2, '0')
   const hasImage = !!project.cover?.asset?.url
 
   return (
@@ -88,8 +85,8 @@ function ProjectRow({ project, n, total }: {
         className="ls-project-row-grid relative px-5 sm:px-8 lg:px-14 py-[22px] grid items-center gap-4 md:gap-6"
       >
         {/* Number */}
-        <span className="font-mono text-ls-muted" style={{ fontSize: 11, letterSpacing: '0.05em' }}>
-          {num} / {tot}
+        <span className="ls-index-num font-mono text-ls-muted" style={{ fontSize: 11, letterSpacing: '0.05em' }}>
+          {n}
         </span>
 
         {/* Title */}
@@ -132,10 +129,10 @@ function ProjectRow({ project, n, total }: {
             width={480}
             height={300}
             className="w-full h-full object-cover"
-            style={{ border: '1px solid var(--ls-line-soft)' }}
+            style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6 }}
           />
         ) : (
-          <Slot label={project.title.toLowerCase()} tone="warm" style={{ width: '100%', height: '100%' }} />
+          <Slot label={project.title.toLowerCase()} tone="warm" style={{ width: '100%', height: '100%', borderRadius: 6 }} />
         )}
       </div>
     </Link>
@@ -286,7 +283,7 @@ export default async function Home() {
           />
           <div style={{ position: 'relative', zIndex: 1 }}>
             <h1 className="font-sans m-0" style={{ fontSize: 'clamp(30px, 4vw, 64px)', lineHeight: 1.1, letterSpacing: '-0.01em', maxWidth: '18ch' }}>
-              I design, build and ship websites & apps, end to end.
+              I custom design, build and ship websites & apps, end-to-end.
             </h1>
           </div>
           <div style={{ position: 'relative', zIndex: 1 }}>
@@ -295,7 +292,7 @@ export default async function Home() {
                 Cape Town · Remote-first · Open to roles
               </p>
               <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.55, margin: '12px 0 0', maxWidth: '44ch' }}>
-                Full-stack developer and designer. I take products from first sketch to deployed code. Formerly a full-stack instructor at Le Wagon, where I taught 200+ developers.
+                I&apos;m a full service developer and designer, taking products from concept to deployed code. Formerly an instructor at Le Wagon, where I taught 200+ people to code.
               </p>
               <a
                 href="#selected-work"
@@ -366,7 +363,7 @@ export default async function Home() {
 
           {projects.map((p, i) => (
             <FadeUp key={p._id} delay={i * 0.06}>
-              <ProjectRow project={p} n={i + 1} total={total} />
+              <ProjectRow project={p} n={i + 1} />
             </FadeUp>
           ))}
 
@@ -380,7 +377,7 @@ export default async function Home() {
             className="font-mono uppercase text-ls-muted m-0 px-5 sm:px-8 lg:px-14"
             style={{ fontSize: 11, letterSpacing: '0.12em', paddingBottom: 48 }}
           >
-            Open for full-stack roles &amp; freelance projects
+            Open for new roles, contract work &amp; freelance projects
           </p>
           <div style={{ overflow: 'hidden', background: marqueeColors.background, padding: '8px 0' }}>
           <div
@@ -484,7 +481,7 @@ export default async function Home() {
           style={{ paddingTop: 'clamp(64px, 8vw, 120px)', gridTemplateColumns: '320px 1fr', maxWidth: 1280 }}
         >
           {settings?.homepagePortrait?.asset?.url ? (
-            <div style={{ position: 'relative', width: '100%', height: 400, borderRadius: 10, overflow: 'hidden', border: '1px solid var(--ls-line-soft)' }}>
+            <div style={{ position: 'relative', width: '100%', height: 400, borderRadius: 6, overflow: 'hidden', border: '1px solid var(--ls-line-soft)' }}>
               <Image
                 src={urlFor(settings.homepagePortrait).width(640).quality(88).auto('format').url()}
                 alt={settings.homepagePortrait.alt || 'Liam Strickland'}
@@ -515,14 +512,15 @@ export default async function Home() {
             </p>
             <div className="flex flex-wrap gap-[14px]" style={{ marginTop: 36 }}>
               <a href="mailto:hello@liamstrickland.dev" className="ls-cta font-moonlight">
-                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="ls-cta-icon">
                   <rect x="0.5" y="0.5" width="14" height="11" rx="1.5" stroke="currentColor"/>
                   <path d="M1 1.5L7.5 7L14 1.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 hello@liamstrickland.dev
               </a>
               <Link href="/about" className="ls-cta font-moonlight">
-                About me →
+                About me
+                <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
