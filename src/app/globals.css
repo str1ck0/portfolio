@@ -222,15 +222,46 @@
 .ls-cta-scroll {
   background: var(--ls-bg);
 }
+/* Geometric cap-height centring (measured) put the arrow visually high — a
+   chevron's weight sits in its point, so the eye reads its optical centre as
+   higher than its ink bbox centre. This resting offset is tuned by eye on top
+   of the measured baseline; the hover bounce adds its 3px on top of it. */
 .ls-cta-arrow {
   transition: transform 0.25s ease;
+  transform: translateY(1.5px);
 }
 .ls-cta-scroll:hover .ls-cta-arrow {
-  transform: translateY(3px);
+  transform: translateY(4.5px);
+}
+
+/* Text-glyph arrows (→, ↗) on the other CTA pills — same bounce timing and
+   3px throw as the scroll arrow above, just pointed at each glyph's own
+   direction of travel. display: inline-block so the transform is reliable
+   on an inline text node across browsers. */
+.ls-cta-arrow-right,
+.ls-cta-arrow-up {
+  display: inline-block;
+  transition: transform 0.25s ease;
+}
+.ls-cta:hover .ls-cta-arrow-right {
+  transform: translateX(3px);
+}
+.ls-cta:hover .ls-cta-arrow-up {
+  transform: translateY(-3px);
 }
 @media (prefers-reduced-motion: reduce) {
-  .ls-cta-arrow { transition: none; }
-  .ls-cta-scroll:hover .ls-cta-arrow { transform: none; }
+  .ls-cta-arrow,
+  .ls-cta-arrow-right,
+  .ls-cta-arrow-up {
+    transition: none;
+  }
+  .ls-cta-scroll:hover .ls-cta-arrow {
+    transform: translateY(1.5px);
+  }
+  .ls-cta:hover .ls-cta-arrow-right,
+  .ls-cta:hover .ls-cta-arrow-up {
+    transform: none;
+  }
 }
 
 /* Index numbers (project rows, disciplines). Box-centring an 11px digit beside

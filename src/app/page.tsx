@@ -283,13 +283,13 @@ export default async function Home() {
           />
           <div style={{ position: 'relative', zIndex: 1 }}>
             <h1 className="font-sans m-0" style={{ fontSize: 'clamp(30px, 4vw, 64px)', lineHeight: 1.1, letterSpacing: '-0.01em', maxWidth: '18ch' }}>
-              I custom design, build and ship websites & apps, end-to-end.
+              I custom <span className="text-ls-accent">design, build</span> and <span className="text-ls-accent">ship</span> websites & apps, end-to-end.
             </h1>
           </div>
           <div style={{ position: 'relative', zIndex: 1 }}>
             <div>
               <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-                Cape Town · Remote-first · Open to roles
+                EU / AU / ZA · Remote-first · Open to roles
               </p>
               <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.55, margin: '12px 0 0', maxWidth: '44ch' }}>
                 I&apos;m a full service developer and designer, taking products from concept to deployed code. Formerly an instructor at Le Wagon, where I taught 200+ people to code.
@@ -302,8 +302,8 @@ export default async function Home() {
                 Explore my work
                 <svg
                   className="ls-cta-arrow"
-                  width="14"
-                  height="16"
+                  width="10.5"
+                  height="12"
                   viewBox="0 0 14 16"
                   fill="none"
                   aria-hidden="true"
@@ -356,7 +356,6 @@ export default async function Home() {
               Selected projects
             </p>
             <p className="font-mono uppercase text-ls-muted m-0 hidden md:block" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-              {/* {String(total).padStart(2, '0')} projects · hover for preview */}
               (2022-2026)
             </p>
           </div>
@@ -456,7 +455,7 @@ export default async function Home() {
                 Archive
               </h2>
               <span className="font-mono uppercase text-ls-muted hidden sm:block" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-                {archive[archive.length - 1]?.year} — {archive[0]?.year} · {String(archive.length).padStart(2, '0')} items
+                {archive[archive.length - 1]?.year} — {archive[0]?.year} · {archive.length} items
               </span>
             </div>
             <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', columnGap: 56 }}>
@@ -520,7 +519,7 @@ export default async function Home() {
               </a>
               <Link href="/about" className="ls-cta font-moonlight">
                 About me
-                <span aria-hidden="true">→</span>
+                <span className="ls-cta-arrow-right" aria-hidden="true">→</span>
               </Link>
             </div>
           </div>

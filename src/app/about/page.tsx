@@ -68,9 +68,7 @@ export default async function AboutPage() {
               marginTop: 16,
             }}
           >
-            I&apos;m an independent{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>full-stack web developer and designer</em>, building with AI and exploring the{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>creative possibilities</em>{' '}of technology.
+            I build <span className="text-ls-accent">web solutions</span> to fit the problem — from portfolios for creatives & ecommerce stores for small businesses, to production code for companies like Virgin Active.
           </h1>
         </div>
 
@@ -82,11 +80,16 @@ export default async function AboutPage() {
           {/* Left: bio + CTAs */}
           <div>
             <p className="font-moonlight text-ls-fg m-0" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch' }}>
-              As a solo full-stack developer, I leverage AI and my background in design &amp; communications to build outstanding user experiences for the web and mobile.
-              I like solving tough problems, sweating the details, and standing behind what I ship.
+              As a solo developer, every project starts with understanding the client&apos;s problem,
+              figuring out what is needed to solve it, and picking the right tools for the job.
+              From concept and ideation, through design and development, to launch and beyond,
+              I ship web products that are fast, reliable, and built to last.
+              I like solving tough problems, am detail-obsessed, and stand behind my work.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
-              I design and develop online presence for small businesses, artists, studios, and independent brands: considered interfaces, clean code, built to last.
+              I work with small businesses, creatives, startups and anyone in-between to develop
+              aesthetic, functional and modern websites, stores, apps and web tools.
+              Considered interfaces, clean, maintainable, extensible code.
               Before this, I worked on web and mobile apps at{' '}
               <a
                 href="https://www.wearefullstack.com/"
@@ -109,7 +112,7 @@ export default async function AboutPage() {
               </a>.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
-              I also design and build for{' '}
+              I also explore the world of creative code and experimental tech with {' '}
               <a
                 href="https://www.studiopilz.art/"
                 target="_blank"
@@ -118,10 +121,11 @@ export default async function AboutPage() {
                 style={{ fontStyle: 'italic', color: 'var(--ls-accent)' }}
               >
                 Studio Pilz
-              </a>, an independent creative studio I run with my partner Liz — a space to push new web tools and experiment beyond client work.
+              </a>, an independent studio I co-founded and run with my partner Liz.
+              We create interactive installations, generative art, and immersive experiences for brands, events and galleries.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22, fontWeight: 500 }}>
-              Open to full-stack web development and design projects — freelance or contract, remote worldwide.
+              I&apos;m open to software engineering roles, contract work & freelance projects - remote, worldwide.
             </p>
 
             {/* CTAs */}
@@ -135,7 +139,7 @@ export default async function AboutPage() {
               </a>
               <a href={SITE.bookingUrl} target="_blank" rel="noopener noreferrer" className="ls-cta font-moonlight">
                 Book a call
-                <span aria-hidden="true">↗</span>
+                <span className="ls-cta-arrow-up" aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
