@@ -20,9 +20,10 @@ function PortraitSlot() {
         overflow: 'hidden',
         maxWidth: 300,
         width: '100%',
-        backgroundColor: 'oklch(0.22 0.02 60)',
+        backgroundColor: 'var(--ls-bg-elev)',
         backgroundImage: 'repeating-linear-gradient(45deg, transparent 0 6px, rgba(255,255,255,0.025) 6px 12px)',
         border: '1px solid var(--ls-line-soft)',
+        borderRadius: 6,
       }}
     >
       <span
@@ -67,9 +68,7 @@ export default async function AboutPage() {
               marginTop: 16,
             }}
           >
-            I&apos;m an independent{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>full-stack web developer and designer</em>, building with AI and exploring the{' '}
-            <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>creative possibilities</em>{' '}of technology.
+            I build <span className="text-ls-accent">web solutions</span> to fit the problem — from portfolios for creatives & ecommerce stores for small businesses, to production code for companies like Virgin Active.
           </h1>
         </div>
 
@@ -81,11 +80,16 @@ export default async function AboutPage() {
           {/* Left: bio + CTAs */}
           <div>
             <p className="font-moonlight text-ls-fg m-0" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch' }}>
-              As a solo full-stack developer, I leverage AI and my background in design &amp; communications to build outstanding user experiences for the web and mobile.
-              I like solving tough problems, sweating the details, and standing behind what I ship.
+              As a solo developer, every project starts with understanding the client&apos;s problem,
+              figuring out what is needed to solve it, and picking the right tools for the job.
+              From concept and ideation, through design and development, to launch and beyond,
+              I ship web products that are fast, reliable, and built to last.
+              I like solving tough problems, am detail-obsessed, and stand behind my work.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
-              I design and develop online presence for small businesses, artists, studios, and independent brands: considered interfaces, clean code, built to last.
+              I work with small businesses, creatives, startups and anyone in-between to develop
+              aesthetic, functional and modern websites, stores, apps and web tools.
+              Considered interfaces, clean, maintainable, extensible code.
               Before this, I worked on web and mobile apps at{' '}
               <a
                 href="https://www.wearefullstack.com/"
@@ -108,7 +112,7 @@ export default async function AboutPage() {
               </a>.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22 }}>
-              I also design and build for{' '}
+              I also explore the world of creative code and experimental tech with {' '}
               <a
                 href="https://www.studiopilz.art/"
                 target="_blank"
@@ -117,23 +121,25 @@ export default async function AboutPage() {
                 style={{ fontStyle: 'italic', color: 'var(--ls-accent)' }}
               >
                 Studio Pilz
-              </a>, an independent creative studio I run with my partner Liz — a space to push new web tools and experiment beyond client work.
+              </a>, an independent studio I co-founded and run with my partner Liz.
+              We create interactive installations, generative art, and immersive experiences for brands, events and galleries.
             </p>
             <p className="font-moonlight text-ls-fg" style={{ fontSize: 16, lineHeight: 1.65, maxWidth: '38ch', marginTop: 22, fontWeight: 500 }}>
-              Open to full-stack web development and design projects — freelance or contract, remote worldwide.
+              I&apos;m open to software engineering roles, contract work & freelance projects - remote, worldwide.
             </p>
 
             {/* CTAs */}
             <div className="flex flex-wrap gap-[14px]" style={{ marginTop: 36 }}>
               <a href={`mailto:${SITE.email}`} className="ls-cta">
-                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="ls-cta-icon">
                   <rect x="0.5" y="0.5" width="14" height="11" rx="1.5" stroke="currentColor"/>
                   <path d="M1 1.5L7.5 7L14 1.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 {SITE.email}
               </a>
               <a href={SITE.bookingUrl} target="_blank" rel="noopener noreferrer" className="ls-cta font-moonlight">
-                Book a call ↗
+                Book a call
+                <span className="ls-cta-arrow-up" aria-hidden="true">↗</span>
               </a>
             </div>
           </div>
@@ -148,11 +154,11 @@ export default async function AboutPage() {
               {ABOUT.disciplines.map((disc, i) => (
                 <li
                   key={disc}
-                  className="flex items-baseline gap-[14px] border-t border-ls-line-soft"
+                  className="flex items-center gap-[14px] border-t border-ls-line-soft"
                   style={{ padding: '12px 0', borderBottom: i === ABOUT.disciplines.length - 1 ? '1px solid var(--ls-line-soft)' : undefined }}
                 >
-                  <span className="font-mono text-ls-muted flex-shrink-0" style={{ fontSize: 11, letterSpacing: '0.06em' }}>
-                    {String(i + 1).padStart(2, '0')}
+                  <span className="ls-index-num font-mono text-ls-muted flex-shrink-0" style={{ fontSize: 11, letterSpacing: '0.06em' }}>
+                    {i + 1}
                   </span>
                   <span className="text-ls-fg">{disc}</span>
                 </li>
@@ -228,7 +234,7 @@ export default async function AboutPage() {
           style={{ paddingTop: 32, paddingBottom: 64, gridTemplateColumns: '1fr 1fr', gap: 56 }}
         >
           {settings?.aboutPortrait?.asset?.url ? (
-            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%' }}>
+            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
               <Image
                 src={urlFor(settings.aboutPortrait).width(1200).quality(88).auto('format').url()}
                 alt={settings.aboutPortrait.alt || 'Liam Strickland'}

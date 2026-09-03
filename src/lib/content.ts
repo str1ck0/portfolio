@@ -15,9 +15,9 @@ export const ABOUT: {
   background: BgEntry[]
 } = {
   disciplines: [
-    'Full-Stack Development',
-    'Web & UI Design',
-    'AI Integration',
+    'Web & Mobile Development',
+    'UI, UX & Web Design',
+    'AI Tooling',
   ],
   social: [
     { label: 'Instagram', url: 'https://www.instagram.com/liam_stricko/' },
@@ -32,7 +32,7 @@ export const ABOUT: {
       orgs: [{ name: 'Full Stack', url: 'https://www.wearefullstack.com/' }],
     },
     {
-      role: 'Web Development Teacher',
+      role: 'Web Development Instructor',
       year: '2022 – 2025',
       orgs: [{ name: 'Le Wagon', url: 'https://www.lewagon.com/' }],
     },

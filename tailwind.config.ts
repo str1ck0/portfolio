@@ -12,7 +12,7 @@ const config: Config = {
     extend: {
       fontFamily: {
         sans: ['var(--font-sans)', ...fontFamily.sans],
-        moonlight: ['var(--font-moonlight)', ...fontFamily.serif],
+        moonlight: ['var(--font-moonlight)', ...fontFamily.sans],
         mono: ['var(--font-mono)', ...fontFamily.mono],
       },
       colors: {

@@ -1,14 +1,13 @@
 'use client'
 
 import Link from 'next/link'
-import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useTheme } from './ThemeProvider'
 import { useState } from 'react'
 
 function YinYang({ inverted }: { inverted: boolean }) {
-  const fg = inverted ? '#f0f0f0' : '#111111'
-  const bg = inverted ? '#111111' : '#f0f0f0'
+  const fg = inverted ? '#f0f2f5' : '#0b0f15'
+  const bg = inverted ? '#0b0f15' : '#f0f2f5'
   return (
     <svg viewBox="0 0 100 100" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
       <circle cx="50" cy="50" r="50" fill={bg} />
@@ -37,7 +36,7 @@ const NAV_LINKS = [
   { href: '/about', label: 'About', match: (p: string) => p === '/about' },
 ]
 
-export default function Header({ showStatus }: { showStatus?: boolean }) {
+export default function Header() {
   const { theme, toggle } = useTheme()
   const pathname = usePathname()
   const [menuOpen, setMenuOpen] = useState(false)
@@ -48,26 +47,17 @@ export default function Header({ showStatus }: { showStatus?: boolean }) {
         className="flex items-center justify-between px-5 sm:px-8 lg:px-14"
         style={{ paddingTop: 26, paddingBottom: 26 }}
       >
-        {/* Left: logo + name */}
-        <div className="flex items-center gap-3">
+        {/* Left: wordmark */}
+        <div className="flex items-baseline gap-3">
           <Link
             href="/"
-            className="flex items-center gap-2.5 hover:opacity-60 transition-opacity"
+            className="flex items-baseline hover:opacity-60 transition-opacity"
             onClick={() => setMenuOpen(false)}
           >
-            <Image src="/logo.png" alt="Logo" width={28} height={28} className="flex-shrink-0" />
-            <span className="font-sans leading-none" style={{ fontSize: 22, letterSpacing: 0 }}>
-              Liam Strickland
+            <span className="font-sans leading-none" style={{ fontSize: 22, letterSpacing: 0, fontWeight: 700 }}>
+              liamstrickland.dev
             </span>
           </Link>
-          {showStatus && (
-            <span
-              className="hidden lg:inline font-mono uppercase"
-              style={{ fontSize: 11, letterSpacing: '0.08em', color: 'var(--ls-muted)', marginLeft: 14 }}
-            >
-              Full-stack web developer & designer
-            </span>
-          )}
         </div>
 
         {/* Desktop: nav links + yin-yang */}

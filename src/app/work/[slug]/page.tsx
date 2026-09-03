@@ -14,7 +14,6 @@ import {
   urlFor,
   type ProjectDetail,
   type SanityImage,
-  type CaseStudyBlock,
 } from '@/lib/sanity'
 
 export const revalidate = 60
@@ -314,7 +313,8 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               </p>
             </div>
             <Link href={`/work/${next.slug}`} className="ls-cta">
-              Continue →
+              Continue
+              <span aria-hidden="true">→</span>
             </Link>
           </Reveal>
         )}

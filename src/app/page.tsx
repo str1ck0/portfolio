@@ -17,6 +17,9 @@ import {
 
 export const revalidate = 60
 
+// Proof strip is written and styled but parked — flip to true to show it again.
+const SHOW_PROOF_STRIP = false
+
 // ─── Slot placeholder ──────────────────────────────────────────────────────
 
 function Slot({ label, tone = 'default', className, style }: {
@@ -26,8 +29,8 @@ function Slot({ label, tone = 'default', className, style }: {
   style?: React.CSSProperties
 }) {
   const bg =
-    tone === 'warm' ? 'oklch(0.22 0.02 60)' :
-    tone === 'mossy' ? 'oklch(0.22 0.02 140)' :
+    tone === 'warm' ? 'oklch(0.24 0.02 200)' :
+    tone === 'mossy' ? 'oklch(0.24 0.03 185)' :
     'var(--ls-bg-elev)'
 
   return (
@@ -60,13 +63,10 @@ function Slot({ label, tone = 'default', className, style }: {
 
 // ─── Project index row ──────────────────────────────────────────────────────
 
-function ProjectRow({ project, n, total }: {
+function ProjectRow({ project, n }: {
   project: IndexProject
   n: number
-  total: number
 }) {
-  const num = String(n).padStart(2, '0')
-  const tot = String(total).padStart(2, '0')
   const hasImage = !!project.cover?.asset?.url
 
   return (
@@ -77,7 +77,7 @@ function ProjectRow({ project, n, total }: {
       {/* Hover bg overlay */}
       <div
         className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-[250ms] pointer-events-none"
-        style={{ background: 'oklch(0.18 0.008 70)' }}
+        style={{ background: 'var(--ls-bg-elev)' }}
       />
 
       {/* Row grid */}
@@ -85,8 +85,8 @@ function ProjectRow({ project, n, total }: {
         className="ls-project-row-grid relative px-5 sm:px-8 lg:px-14 py-[22px] grid items-center gap-4 md:gap-6"
       >
         {/* Number */}
-        <span className="font-mono text-ls-muted" style={{ fontSize: 11, letterSpacing: '0.05em' }}>
-          {num} / {tot}
+        <span className="ls-index-num font-mono text-ls-muted" style={{ fontSize: 11, letterSpacing: '0.05em' }}>
+          {n}
         </span>
 
         {/* Title */}
@@ -129,10 +129,10 @@ function ProjectRow({ project, n, total }: {
             width={480}
             height={300}
             className="w-full h-full object-cover"
-            style={{ border: '1px solid var(--ls-line-soft)' }}
+            style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6 }}
           />
         ) : (
-          <Slot label={project.title.toLowerCase()} tone="warm" style={{ width: '100%', height: '100%' }} />
+          <Slot label={project.title.toLowerCase()} tone="warm" style={{ width: '100%', height: '100%', borderRadius: 6 }} />
         )}
       </div>
     </Link>
@@ -230,19 +230,21 @@ function ArchiveRow({ item }: { item: ArchiveProject }) {
 // ─── Marquee config ──────────────────────────────────────────────────────────
 
 const marqueeItems = [
-  'full-stack web development',
-  'web & product design',
-  'ai-native builds',
-  'from concept to launch',
-  'full-stack web development',
-  'web & product design',
-  'ai-native builds',
-  'from concept to launch',
+  'typescript',
+  'react',
+  'next.js',
+  'ruby on rails',
+  'postgresql',
+  'kotlin multiplatform',
+  'three.js',
+  'tailwind',
+  'figma',
+  'vercel',
 ]
 
 const marqueeColors = {
-  background: 'oklch(0.48 0.08 142)',
-  text: 'oklch(0.96 0.01 85)',
+  background: 'var(--ls-accent)',
+  text: 'var(--ls-marquee-text)',
   separator: 'inherit',
 }
 
@@ -260,7 +262,7 @@ export default async function Home() {
 
   return (
     <>
-      <Header showStatus />
+      <Header />
 
       <main>
 
@@ -281,45 +283,86 @@ export default async function Home() {
           />
           <div style={{ position: 'relative', zIndex: 1 }}>
             <h1 className="font-sans m-0" style={{ fontSize: 'clamp(30px, 4vw, 64px)', lineHeight: 1.1, letterSpacing: '-0.01em', maxWidth: '18ch' }}>
-              Fast, considered websites and web apps —{' '}
-              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>designed and built end to end</em>.
+              I custom <span className="text-ls-accent">design, build</span> and <span className="text-ls-accent">ship</span> websites & apps, end-to-end.
             </h1>
           </div>
           <div style={{ position: 'relative', zIndex: 1 }}>
             <div>
               <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-                Cape Town · Remote first · Freelance
+                EU / AU / ZA · Remote-first · Open to roles
               </p>
               <p className="font-moonlight text-ls-fg-dim" style={{ fontSize: 15, lineHeight: 1.55, margin: '12px 0 0', maxWidth: '44ch' }}>
-                Full-stack developer and designer, partnering with studios, brands and founders to ship polished, AI-native products — from first pixel to production.
+                I&apos;m a full service developer and designer, taking products from concept to deployed code. Formerly an instructor at Le Wagon, where I taught 200+ people to code.
               </p>
               <a
                 href="#selected-work"
-                className="ls-scroll-cta font-sans uppercase inline-flex items-center gap-[10px] text-ls-fg-dim"
-                style={{ marginTop: 28, marginBottom: 12,fontSize: 16, letterSpacing: '0.12em', textDecoration: 'none' }}
+                className="ls-cta ls-cta-scroll font-sans"
+                style={{ marginTop: 32 }}
               >
                 Explore my work
-                <span className="ls-bounce-arrow">↓</span>
+                <svg
+                  className="ls-cta-arrow"
+                  width="10.5"
+                  height="12"
+                  viewBox="0 0 14 16"
+                  fill="none"
+                  aria-hidden="true"
+                  style={{ flexShrink: 0 }}
+                >
+                  <path
+                    d="M7 1v13M1.5 8.5L7 14l5.5-5.5"
+                    stroke="currentColor"
+                    strokeWidth="1.5"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </a>
             </div>
           </div>
         </div>
 
+        {/* PROOF STRIP — three checkable facts, above the fold on most screens.
+            Hidden for now; flip SHOW_PROOF_STRIP to bring it back. */}
+        {SHOW_PROOF_STRIP && (
+        <div
+          className="px-5 sm:px-8 lg:px-14 border-t border-b border-ls-line-soft"
+          style={{ paddingTop: 18, paddingBottom: 18 }}
+        >
+          <ul
+            className="font-mono uppercase text-ls-fg-dim flex flex-wrap items-center gap-x-6 gap-y-2 m-0 p-0"
+            style={{ fontSize: 11, letterSpacing: '0.12em', listStyle: 'none' }}
+          >
+            {[
+              '200+ developers taught',
+              'End-to-end builds',
+              'EU / AU / ZA work rights',
+            ].map((item, i) => (
+              <li key={item} className="flex items-center gap-x-6">
+                {i > 0 && <span className="text-ls-line" aria-hidden="true">·</span>}
+                {item}
+              </li>
+            ))}
+          </ul>
+        </div>
+        )}
+
         {/* PROJECT INDEX */}
         <div id="selected-work">
-          <div className="flex justify-between items-baseline px-5 sm:px-8 lg:px-14" style={{ paddingBottom: 16, marginTop: 20 }}>
+          {/* Padded to match a project row's 78px height so the index reads as
+              one rhythm rather than a cramped label above a list. */}
+          <div className="flex justify-between items-baseline px-5 sm:px-8 lg:px-14" style={{ paddingTop: 32, paddingBottom: 32 }}>
             <p className="font-mono uppercase text-ls-muted m-0" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
               Selected projects
             </p>
             <p className="font-mono uppercase text-ls-muted m-0 hidden md:block" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-              {/* {String(total).padStart(2, '0')} projects · hover for preview */}
               (2022-2026)
             </p>
           </div>
 
           {projects.map((p, i) => (
             <FadeUp key={p._id} delay={i * 0.06}>
-              <ProjectRow project={p} n={i + 1} total={total} />
+              <ProjectRow project={p} n={i + 1} />
             </FadeUp>
           ))}
 
@@ -331,9 +374,9 @@ export default async function Home() {
         <div style={{ paddingTop: 72 }}>
           <p
             className="font-mono uppercase text-ls-muted m-0 px-5 sm:px-8 lg:px-14"
-            style={{ fontSize: 11, letterSpacing: '0.12em', paddingBottom: 20 }}
+            style={{ fontSize: 11, letterSpacing: '0.12em', paddingBottom: 48 }}
           >
-            Taking on new projects for Q3 / Q4 2026
+            Open for new roles, contract work &amp; freelance projects
           </p>
           <div style={{ overflow: 'hidden', background: marqueeColors.background, padding: '8px 0' }}>
           <div
@@ -350,7 +393,9 @@ export default async function Home() {
                 {marqueeItems.map((item, j) => (
                   <span key={j}>
                     {item}
-                    <span style={{ padding: '0 0.4em', color: marqueeColors.separator, fontSize: '0.8em' }}>✦</span>
+                    {/* The label is uppercase, so its optical centre sits well above the
+                        baseline the star would otherwise sit on — lift it to match. */}
+                    <span style={{ padding: '0 0.4em', color: marqueeColors.separator, fontSize: '0.72em', verticalAlign: '0.16em' }}>✦</span>
                   </span>
                 ))}
               </span>
@@ -410,7 +455,7 @@ export default async function Home() {
                 Archive
               </h2>
               <span className="font-mono uppercase text-ls-muted hidden sm:block" style={{ fontSize: 11, letterSpacing: '0.12em' }}>
-                {archive[archive.length - 1]?.year} — {archive[0]?.year} · {String(archive.length).padStart(2, '0')} items
+                {archive[archive.length - 1]?.year} — {archive[0]?.year} · {archive.length} items
               </span>
             </div>
             <div className="grid" style={{ gridTemplateColumns: 'repeat(auto-fit, minmax(320px, 1fr))', columnGap: 56 }}>
@@ -435,7 +480,7 @@ export default async function Home() {
           style={{ paddingTop: 'clamp(64px, 8vw, 120px)', gridTemplateColumns: '320px 1fr', maxWidth: 1280 }}
         >
           {settings?.homepagePortrait?.asset?.url ? (
-            <div style={{ position: 'relative', width: '100%', height: 400 }}>
+            <div style={{ position: 'relative', width: '100%', height: 400, borderRadius: 6, overflow: 'hidden', border: '1px solid var(--ls-line-soft)' }}>
               <Image
                 src={urlFor(settings.homepagePortrait).width(640).quality(88).auto('format').url()}
                 alt={settings.homepagePortrait.alt || 'Liam Strickland'}
@@ -454,22 +499,27 @@ export default async function Home() {
               className="font-sans text-ls-fg m-0"
               style={{ fontSize: 'clamp(24px, 3vw, 40px)', lineHeight: 1.2, marginTop: 16, maxWidth: '22ch', letterSpacing: '-0.005em' }}
             >
-              I&apos;m a freelance{' '}
-              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>
-                full-stack web developer and designer
-              </em>{' '}
-              building fast, modern products for the web — increasingly with AI in the loop.
+              I&apos;m a{' '}
+              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>software engineer</em>{' '}
+              with a{' '}
+              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>design</em>{' '}
+              background and{' '}
+              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>8+ years</em>{' '}
+              building digital products to meet business needs. I build &amp; ship fast with{' '}
+              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>AI</em>{' '}
+              in the loop.
             </p>
             <div className="flex flex-wrap gap-[14px]" style={{ marginTop: 36 }}>
               <a href="mailto:hello@liamstrickland.dev" className="ls-cta font-moonlight">
-                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ flexShrink: 0 }}>
+                <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg" className="ls-cta-icon">
                   <rect x="0.5" y="0.5" width="14" height="11" rx="1.5" stroke="currentColor"/>
                   <path d="M1 1.5L7.5 7L14 1.5" stroke="currentColor" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
                 hello@liamstrickland.dev
               </a>
               <Link href="/about" className="ls-cta font-moonlight">
-                About me →
+                About me
+                <span className="ls-cta-arrow-right" aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
@@ -478,9 +528,7 @@ export default async function Home() {
 
       </main>
 
-      <div style={{ marginTop: 'clamp(120px, 16vw, 220px)' }}>
-        <Footer />
-      </div>
+      <Footer />
     </>
   )
 }
