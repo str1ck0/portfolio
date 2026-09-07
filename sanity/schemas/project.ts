@@ -86,13 +86,6 @@ export default defineType({
       options: { layout: 'tags' },
     }),
     defineField({
-      name: 'description',
-      title: 'Short Description (legacy)',
-      type: 'text',
-      rows: 3,
-      description: 'Legacy field — use Blurb instead',
-    }),
-    defineField({
       name: 'body',
       title: 'Case Study Body',
       type: 'array',
@@ -189,13 +182,6 @@ export default defineType({
       ],
     }),
     defineField({
-      name: 'fullDescription',
-      title: 'Full Description (legacy)',
-      type: 'array',
-      of: [{ type: 'block' }],
-      description: 'Legacy field — use Case Study Body instead',
-    }),
-    defineField({
       name: 'images',
       title: 'Images',
       type: 'array',
@@ -242,6 +228,22 @@ export default defineType({
       options: { hotspot: true },
       description: 'First-frame image shown before the demo video plays (and used as the grid thumbnail).',
       fields: [{ name: 'alt', title: 'Alt Text', type: 'string' }],
+    }),
+    defineField({
+      name: 'mediaCropAnchor',
+      title: 'Lead Media Crop Anchor',
+      type: 'string',
+      description:
+        "The lead video/cover image is cropped to a fixed widescreen box. Choose which edge stays fully visible — 'Top' keeps headers/nav in frame and trims the bottom instead.",
+      options: {
+        list: [
+          { title: 'Top', value: 'top' },
+          { title: 'Center', value: 'center' },
+          { title: 'Bottom', value: 'bottom' },
+        ],
+        layout: 'radio',
+      },
+      initialValue: 'center',
     }),
     defineField({
       name: 'browserFrame',

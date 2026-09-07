@@ -120,14 +120,14 @@ function ProjectRow({ project, n }: {
           opacity-0 scale-[0.96]
           group-hover:opacity-100 group-hover:scale-100
           transition-all duration-[350ms] ease-[cubic-bezier(.2,.7,.3,1)]"
-        style={{ left: '60%', width: 480, height: 300 }}
+        style={{ left: '60%', width: 600, height: 375 }}
       >
         {hasImage ? (
           <Image
-            src={urlFor(project.cover!).width(960).quality(85).auto('format').url()}
+            src={urlFor(project.cover!).width(1200).quality(85).auto('format').url()}
             alt={project.cover!.alt || project.title}
-            width={480}
-            height={300}
+            width={600}
+            height={375}
             className="w-full h-full object-cover"
             style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6 }}
           />
@@ -500,13 +500,13 @@ export default async function Home() {
               style={{ fontSize: 'clamp(24px, 3vw, 40px)', lineHeight: 1.2, marginTop: 16, maxWidth: '22ch', letterSpacing: '-0.005em' }}
             >
               I&apos;m a{' '}
-              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>software engineer</em>{' '}
+              <span className="text-ls-accent">software engineer</span>{' '}
               with a{' '}
-              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>design</em>{' '}
+              <span className="text-ls-accent">design</span>{' '}
               background and{' '}
-              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>8+ years</em>{' '}
+              <span className="text-ls-accent">8+ years</span>{' '}
               building digital products to meet business needs. I build &amp; ship fast with{' '}
-              <em className="text-ls-accent" style={{ fontStyle: 'italic' }}>AI</em>{' '}
+              <span className="text-ls-accent">AI</span>{' '}
               in the loop.
             </p>
             <div className="flex flex-wrap gap-[14px]" style={{ marginTop: 36 }}>

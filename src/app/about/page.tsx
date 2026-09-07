@@ -75,7 +75,7 @@ export default async function AboutPage() {
         {/* BODY — two column: bio left, disciplines right */}
         <div
           className="px-5 sm:px-8 lg:px-14 flex flex-col gap-12 sm:grid"
-          style={{ paddingTop: 56, paddingBottom: 0, gridTemplateColumns: '1fr 1fr', gap: 80 }}
+          style={{ paddingTop: 56, paddingBottom: 64, gridTemplateColumns: '1fr 1fr', gap: 80 }}
         >
           {/* Left: bio + CTAs */}
           <div>
@@ -225,27 +225,23 @@ export default async function AboutPage() {
                 </li>
               ))}
             </ul>
-          </div>
-        </div>
 
-        {/* PORTRAIT + COLOPHON */}
-        <div
-          className="px-5 sm:px-8 lg:px-14 flex flex-col gap-12 sm:grid sm:items-end"
-          style={{ paddingTop: 32, paddingBottom: 64, gridTemplateColumns: '1fr 1fr', gap: 56 }}
-        >
-          {settings?.aboutPortrait?.asset?.url ? (
-            <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
-              <Image
-                src={urlFor(settings.aboutPortrait).width(1200).quality(88).auto('format').url()}
-                alt={settings.aboutPortrait.alt || 'Liam Strickland'}
-                fill
-                style={{ objectFit: 'cover', objectPosition: 'center top' }}
-              />
+            {/* Portrait */}
+            <div style={{ marginTop: 48 }}>
+              {settings?.aboutPortrait?.asset?.url ? (
+                <div style={{ position: 'relative', aspectRatio: '4/5', overflow: 'hidden', maxWidth: 300, width: '100%', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
+                  <Image
+                    src={urlFor(settings.aboutPortrait).width(1200).quality(88).auto('format').url()}
+                    alt={settings.aboutPortrait.alt || 'Liam Strickland'}
+                    fill
+                    style={{ objectFit: 'cover', objectPosition: 'center top' }}
+                  />
+                </div>
+              ) : (
+                <PortraitSlot />
+              )}
             </div>
-          ) : (
-            <PortraitSlot />
-          )}
-
+          </div>
         </div>
 
       </main>

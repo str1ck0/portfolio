@@ -96,7 +96,6 @@ export const allProjectsQuery = `
     kind,
     role,
     blurb,
-    description,
     featured,
     tags,
     technologies,
@@ -116,7 +115,6 @@ export const projectBySlugQuery = `
     title,
     slug,
     blurb,
-    description,
     kind,
     role,
     collaborators,
@@ -125,6 +123,7 @@ export const projectBySlugQuery = `
     links,
     "video": video.asset->url,
     "videoPoster": videoPoster.asset->url,
+    mediaCropAnchor,
     browserFrame,
     "cover": coalesce(cover, images[0]) { ${imageFields} },
     "body": body[] {
@@ -137,7 +136,6 @@ export const projectBySlugQuery = `
         "image": image { ${imageFields} }
       }
     },
-    fullDescription,
     "images": images[] {
       _key, alt, caption, gridSpan, crop, hotspot,
       asset-> { _id, url, metadata { dimensions, lqip } }
@@ -321,7 +319,6 @@ export interface ProjectDetail {
   title: string
   slug: { current: string }
   blurb?: string
-  description?: string
   kind?: string
   role?: string
   collaborators?: string
@@ -329,10 +326,10 @@ export interface ProjectDetail {
   year?: number
   video?: string
   videoPoster?: string
+  mediaCropAnchor?: 'top' | 'center' | 'bottom'
   browserFrame?: { enabled?: boolean; url?: string }
   cover?: SanityImage
   body?: CaseStudyBlock[]
-  fullDescription?: unknown[]
   images?: ProjectImage[]
   links?: { title: string; url: string }[]
 }
@@ -350,7 +347,6 @@ export interface Project {
   title: string
   slug: { current: string }
   featured?: boolean
-  description?: string
   blurb?: string
   kind?: string
   role?: string

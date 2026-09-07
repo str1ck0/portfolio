@@ -18,6 +18,10 @@ import {
 
 export const revalidate = 60
 
+// Matches Motherlode's native video dimensions (1152×656) — the reference
+// project whose lead video should never get cropped.
+const LEAD_MEDIA_ASPECT_RATIO = '1152 / 656'
+
 export async function generateStaticParams() {
   const projects = await getAllProjects()
   return projects.map((p) => ({ slug: p.slug.current }))
@@ -27,7 +31,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const { slug } = await params
   const project = await getProjectBySlug(slug)
   if (!project) return {}
-  const description = project.blurb || project.description
+  const description = project.blurb
   const ogImage = project.cover?.asset?.url
     ? urlFor(project.cover).width(1200).height(630).fit('crop').auto('format').url()
     : undefined
@@ -96,7 +100,7 @@ function buildPortableTextComponents(sectionCount: { n: number }) {
             className="font-mono uppercase text-ls-muted"
             style={{ fontSize: 10.5, letterSpacing: '0.14em', marginBottom: 12, marginTop: 0 }}
           >
-            — {String(n).padStart(2, '0')} / {value.heading}
+            — {n} / {value.heading}
           </h4>
         )
       },
@@ -187,7 +191,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           </Link>
           <span className="font-mono text-ls-muted" style={{ fontSize: 11 }}>/</span>
           <span className="font-mono uppercase text-ls-fg-dim" style={{ fontSize: 11, letterSpacing: '0.1em' }}>
-            {String(kindNum).padStart(2, '0')} · {project.kind || 'Project'}
+            {kindNum} · {project.kind || 'Project'}
           </span>
         </div>
 
@@ -240,18 +244,23 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
 
         {/* LEAD MEDIA — video or cover, optionally in a browser frame */}
         {(project.cover?.asset?.url || project.video) && (() => {
+          const cropAnchor = project.mediaCropAnchor || 'center'
           const media = project.video ? (
-            <video
-              src={project.video}
-              poster={project.videoPoster}
-              autoPlay muted loop playsInline
-              className="w-full h-auto block"
-            />
+            <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden' }}>
+              <video
+                src={project.video}
+                poster={project.videoPoster}
+                autoPlay muted loop playsInline
+                className="w-full h-full object-cover block"
+                style={{ objectPosition: cropAnchor }}
+              />
+            </div>
           ) : project.cover?.asset?.url ? (
-            <div style={{ aspectRatio: '16/8', overflow: 'hidden' }}>
+            <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden' }}>
               <SanityImg
                 img={project.cover}
                 className="w-full h-full object-cover"
+                style={{ objectPosition: cropAnchor }}
                 priority
               />
             </div>
@@ -280,12 +289,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {/* Image grid — shown after body if both exist, or standalone for legacy projects */}
         {project.images && project.images.length > 0 && (
           <Reveal className="px-5 sm:px-8 lg:px-14" style={{ marginTop: 56 }}>
-            {!hasBody && (project.blurb || project.description) ? (
+            {!hasBody && project.blurb ? (
               <p
                 className="font-sans text-ls-fg"
                 style={{ fontSize: 24, lineHeight: 1.3, maxWidth: '30ch', marginBottom: 40 }}
               >
-                {project.blurb || project.description}
+                {project.blurb}
               </p>
             ) : null}
             <ProjectImages images={project.images} projectTitle={project.title} />
@@ -337,7 +346,7 @@ function CaseStudyBody({ project, sectionCount }: {
   // Split body blocks into "sections" separated by sectionHeadings
   // Render as: lead (first non-section block) + right column of sections
   // For now, render all blocks linearly in the two-column layout
-  const leadText = project.blurb || project.description
+  const leadText = project.blurb
   const components = buildPortableTextComponents(sectionCount)
 
   return (
