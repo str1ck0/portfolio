@@ -7,6 +7,7 @@ import Footer from '@/components/Footer'
 import ProjectImages from '@/components/ProjectImages'
 import BrowserFrame from '@/components/BrowserFrame'
 import Reveal from '@/components/Reveal'
+import HoverVideo from '@/components/HoverVideo'
 import {
   getAllProjects,
   getProjectBySlug,
@@ -247,10 +248,9 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
           const cropAnchor = project.mediaCropAnchor || 'center'
           const media = project.video ? (
             <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden' }}>
-              <video
+              <HoverVideo
                 src={project.video}
                 poster={project.videoPoster}
-                autoPlay muted loop playsInline
                 className="w-full h-full object-cover block"
                 style={{ objectPosition: cropAnchor }}
               />

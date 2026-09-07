@@ -56,6 +56,8 @@ export const indexProjectsQuery = `
     year,
     kind,
     role,
+    "video": video.asset->url,
+    mediaCropAnchor,
     "cover": coalesce(cover, images[0]) { ${imageFields} }
   }
 `
@@ -279,6 +281,8 @@ export interface IndexProject {
   year?: number
   kind?: string
   role?: string
+  video?: string
+  mediaCropAnchor?: 'top' | 'center' | 'bottom'
   cover?: SanityImage
 }
 

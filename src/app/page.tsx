@@ -4,6 +4,7 @@ import Header from '@/components/Header'
 import Footer from '@/components/Footer'
 import FadeUp from '@/components/FadeUp'
 import DeferredDotGrid from '@/components/DeferredDotGrid'
+import HoverVideo from '@/components/HoverVideo'
 import {
   getIndexProjects,
   getArchiveProjects,
@@ -68,6 +69,7 @@ function ProjectRow({ project, n }: {
   n: number
 }) {
   const hasImage = !!project.cover?.asset?.url
+  const cropAnchor = project.mediaCropAnchor || 'center'
 
   return (
     <Link
@@ -122,14 +124,22 @@ function ProjectRow({ project, n }: {
           transition-all duration-[350ms] ease-[cubic-bezier(.2,.7,.3,1)]"
         style={{ left: '60%', width: 600, height: 375 }}
       >
-        {hasImage ? (
+        {project.video ? (
+          <HoverVideo
+            src={project.video}
+            poster={hasImage ? urlFor(project.cover!).width(1200).quality(85).auto('format').url() : undefined}
+            playOnHover
+            className="w-full h-full object-cover block"
+            style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6, objectPosition: cropAnchor }}
+          />
+        ) : hasImage ? (
           <Image
             src={urlFor(project.cover!).width(1200).quality(85).auto('format').url()}
             alt={project.cover!.alt || project.title}
             width={600}
             height={375}
             className="w-full h-full object-cover"
-            style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6 }}
+            style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6, objectPosition: cropAnchor }}
           />
         ) : (
           <Slot label={project.title.toLowerCase()} tone="warm" style={{ width: '100%', height: '100%', borderRadius: 6 }} />
