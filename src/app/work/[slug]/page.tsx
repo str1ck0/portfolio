@@ -69,10 +69,11 @@ function SanityImg({ img, className, style, priority }: {
 
   return (
     <Image
-      src={urlFor(img).width(1400).quality(88).auto('format').url()}
+      src={urlFor(img).width(3840).quality(90).auto('format').url()}
       alt={img.alt || ''}
       width={w}
       height={h}
+      sizes="100vw"
       className={className}
       style={style}
       placeholder={img.asset.metadata?.lqip ? 'blur' : 'empty'}
@@ -116,12 +117,12 @@ function buildPortableTextComponents(sectionCount: { n: number }) {
       pairedImages: ({ value }: { value: { imageA?: SanityImage; imageB?: SanityImage } }) => (
         <div className="ls-cs-wide ls-cs-pair">
           {value.imageA?.asset && (
-            <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
+            <div style={{ aspectRatio: '4/5', overflow: 'hidden', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
               <SanityImg img={value.imageA} className="w-full h-full object-cover" />
             </div>
           )}
           {value.imageB?.asset && (
-            <div style={{ aspectRatio: '4/5', overflow: 'hidden' }}>
+            <div style={{ aspectRatio: '4/5', overflow: 'hidden', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
               <SanityImg img={value.imageB} className="w-full h-full object-cover" />
             </div>
           )}
@@ -129,7 +130,7 @@ function buildPortableTextComponents(sectionCount: { n: number }) {
       ),
       fullBleedImage: ({ value }: { value: { image?: SanityImage } }) => (
         value.image?.asset ? (
-          <div className="ls-cs-wide" style={{ aspectRatio: '16/9', overflow: 'hidden' }}>
+          <div className="ls-cs-wide" style={{ aspectRatio: '16/9', overflow: 'hidden', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
             <SanityImg img={value.image} className="w-full h-full object-cover" />
           </div>
         ) : null
@@ -246,8 +247,12 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
         {/* LEAD MEDIA — video or cover, optionally in a browser frame */}
         {(project.cover?.asset?.url || project.video) && (() => {
           const cropAnchor = project.mediaCropAnchor || 'center'
+          // Skip the site-wide radius when the browser frame is wrapping this —
+          // its own 12px window chrome already rounds the outer corners.
+          const mediaRadius = project.browserFrame?.enabled ? undefined : 6
+          const mediaBorder = project.browserFrame?.enabled ? undefined : '1px solid var(--ls-line-soft)'
           const media = project.video ? (
-            <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden' }}>
+            <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden', borderRadius: mediaRadius, border: mediaBorder }}>
               <HoverVideo
                 src={project.video}
                 poster={project.videoPoster}
@@ -256,7 +261,7 @@ export default async function ProjectPage({ params }: { params: Promise<{ slug: 
               />
             </div>
           ) : project.cover?.asset?.url ? (
-            <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden' }}>
+            <div style={{ aspectRatio: LEAD_MEDIA_ASPECT_RATIO, overflow: 'hidden', borderRadius: mediaRadius, border: mediaBorder }}>
               <SanityImg
                 img={project.cover}
                 className="w-full h-full object-cover"

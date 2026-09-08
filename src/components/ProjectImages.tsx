@@ -40,6 +40,7 @@ export default function ProjectImages({ images, projectTitle }: { images: Projec
                   width={w}
                   height={h}
                   className="w-full h-auto"
+                  style={{ borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}
                   priority={i === 0}
                   placeholder={image.asset.metadata?.lqip ? 'blur' : 'empty'}
                   blurDataURL={image.asset.metadata?.lqip}

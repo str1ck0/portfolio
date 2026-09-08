@@ -115,29 +115,29 @@ function ProjectRow({ project, n }: {
         </span>
       </div>
 
-      {/* Peek image */}
+      {/* Peek image — 648x369 matches the project page's lead media ratio (1152/656) exactly (x0.5625) */}
       <div
         className="absolute top-1/2 hidden md:block pointer-events-none z-10
           -translate-x-1/2 -translate-y-1/2
           opacity-0 scale-[0.96]
           group-hover:opacity-100 group-hover:scale-100
           transition-all duration-[350ms] ease-[cubic-bezier(.2,.7,.3,1)]"
-        style={{ left: '60%', width: 600, height: 375 }}
+        style={{ left: '60%', width: 648, height: 369 }}
       >
         {project.video ? (
           <HoverVideo
             src={project.video}
-            poster={hasImage ? urlFor(project.cover!).width(1200).quality(85).auto('format').url() : undefined}
+            poster={hasImage ? urlFor(project.cover!).width(1300).quality(85).auto('format').url() : undefined}
             playOnHover
             className="w-full h-full object-cover block"
             style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6, objectPosition: cropAnchor }}
           />
         ) : hasImage ? (
           <Image
-            src={urlFor(project.cover!).width(1200).quality(85).auto('format').url()}
+            src={urlFor(project.cover!).width(1300).quality(85).auto('format').url()}
             alt={project.cover!.alt || project.title}
-            width={600}
-            height={375}
+            width={648}
+            height={369}
             className="w-full h-full object-cover"
             style={{ border: '1px solid var(--ls-line-soft)', borderRadius: 6, objectPosition: cropAnchor }}
           />
@@ -192,7 +192,7 @@ function RecentEntry({ post }: { post: RecentPost }) {
       {/* Thumbnail */}
       <div className="hidden md:block">
         {post.cover?.asset?.url ? (
-          <div style={{ aspectRatio: '4/3', overflow: 'hidden' }}>
+          <div style={{ aspectRatio: '4/3', overflow: 'hidden', borderRadius: 6, border: '1px solid var(--ls-line-soft)' }}>
             <Image
               src={urlFor(post.cover).width(480).quality(85).auto('format').url()}
               alt={post.cover.alt || post.title}
