@@ -21,6 +21,9 @@ export const revalidate = 60
 // Proof strip is written and styled but parked — flip to true to show it again.
 const SHOW_PROOF_STRIP = false
 
+// Archive projects need fleshing out — flip to true to bring the section back.
+const SHOW_ARCHIVE = false
+
 // ─── Slot placeholder ──────────────────────────────────────────────────────
 
 function Slot({ label, tone = 'default', className, style }: {
@@ -457,7 +460,7 @@ export default async function Home() {
         </FadeUp> */}
 
         {/* ARCHIVE */}
-        {archive.length > 0 && (
+        {SHOW_ARCHIVE && archive.length > 0 && (
           <FadeUp>
           <div className="px-5 sm:px-8 lg:px-14" style={{ paddingTop: 60 }}>
             <div className="flex justify-between items-baseline border-b border-ls-line-soft" style={{ paddingBottom: 16 }}>
